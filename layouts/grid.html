@@ -1,27 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Grid Layout</title>
-  <link rel="stylesheet" href="../shared/layout.css" />
+  <meta charset="UTF-8">
+  <title>Grid</title>
+  <link rel="stylesheet" href="../style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
 </head>
 <body>
-
+  <h1>Grid</h1>
   <div class="grid">
-    <div id="a"></div>
-    <div id="b"></div>
-    <div id="c"></div>
+    <div class="sketch-container" id="sketch1"></div>
+    <div class="sketch-container" id="sketch2"></div>
+    <div class="sketch-container" id="SIFCO2slider"></div>
   </div>
 
-  <script src="../vendor/p5.min.js"></script>
-  <script type="module">
-    import { mount } from "../shared/mount.js";
-    import sketch1 from "../sketches/sketch1.js"; // replace with file name and path
-    import sketch2 from "../sketches/sketch2.js";
 
-    mount(ardra, document.querySelector("#a"));
-    mount(jamie, document.querySelector("#b"));
-  </script>
-
+  <script src="../sketches/sketch1.js"></script>
+  <script src="../sketches/sketch2.js"></script>
+  <script src="../sketches/SIFCO2slider.js"></script>
 </body>
 </html>

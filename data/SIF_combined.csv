@@ -1,0 +1,369 @@
+﻿SequencesName,Daily_SIF_757nm,latitude,longitude,datetime,MeasurementMode,SimplyGoodOrBadQualityFlag,tag,location_1,city_country,country,city
+b'fossil_Almaty_Kazakhstan',0.300168991,43.04052734,76.9475708,8/7/19 8:05,b'AM',0,b'fossil,Almaty_Kazakhstan',Almaty_Kazakhstan,Kazakhstan,Almaty
+b'fossil_Baghdad_Iraq',0.231315613,33.13311768,44.47900391,8/8/19 8:46,b'AM',0,b'fossil,Baghdad_Iraq',Baghdad_Iraq,Iraq,Baghdad
+b'fossil_Bogota_Colombia',0.168305397,4.832580566,-74.39477539,8/8/19 14:47,b'AM',0,b'fossil,Bogota_Colombia',Bogota_Colombia,Colombia,Bogota
+b'fossil_Phoenix_USA',0.074824333,33.46697998,-112.791626,10/8/19 19:03,b'AM',0,b'fossil,Phoenix_USA',Phoenix_USA,USA,Phoenix
+b'fossil_Portland_USA',0.090065002,45.70452881,-123.3043213,10/11/19 19:51,b'AM',0,b'fossil,Portland_USA',Portland_USA,USA,Portland
+b'fossil_Montreal_Canada',0.007732391,47.2109375,-68.54003906,10/15/19 15:09,b'AM',0,b'fossil,Montreal_Canada',Montreal_Canada,Canada,Montreal
+b'fossil_Ahmadabad_India',0.059027672,21.24908447,74.39404297,12/22/19 9:40,b'AM',0,b'fossil,Ahmadabad_India',Ahmadabad_India,India,Ahmadabad
+b'fossil_Khartoum_Sudan',0.21683979,15.56085205,32.23010254,12/22/19 12:48,b'AM',0,b'fossil,Khartoum_Sudan',Khartoum_Sudan,Sudan,Khartoum
+b'fossil_Sao_Paulo_Brazil',0.235276222,-23.30999756,-47.19451904,5/5/20 14:50,b'AM',0,b'fossil,Sao_Paulo_Brazil',Sao_Paulo_Brazil,Brazil,Sao_Paulo
+b'fossil_Brisbane_Australia',0.284162521,-28.69873047,152.2317505,5/25/20 2:49,b'AM',0,b'fossil,Brisbane_Australia',Brisbane_Australia,Australia,Brisbane
+b'fossil_Osaka_Japan',0.49650383,35.15863037,135.7459717,5/29/20 6:15,b'AM',0,b'fossil,Osaka_Japan',Osaka_Japan,Japan,Osaka
+b'fossil_Tianjin_China',-0.072584152,38.76019287,116.887085,6/6/20 4:40,b'AM',0,b'fossil,Tianjin_China',Tianjin_China,China,Tianjin
+b'fossil_Zhengzhou_China',0.151463509,35.13690186,113.7750854,6/10/20 3:04,b'AM',0,b'fossil,Zhengzhou_China',Zhengzhou_China,China,Zhengzhou
+b'fossil_Tehran_Iran',0.686021805,36.34863281,51.20111084,6/14/20 12:41,b'AM',0,b'fossil,Tehran_Iran',Tehran_Iran,Iran,Tehran
+b'fossil_Paris_France',0.495085716,49.36968994,3.588684082,6/18/20 9:19,b'AM',0,b'fossil,Paris_France',Paris_France,France,Paris
+b'fossil_New_York_USA',0.781618118,40.79321289,-73.62054443,6/18/20 18:49,b'AM',0,b'fossil,New_York_USA',New_York_USA,USA,New_York
+b'fossil_Rome_Italy',0.361989021,42.05358887,12.24462891,6/19/20 6:55,b'AM',0,b'fossil,Rome_Italy',Rome_Italy,Italy,Rome
+b'fossil_Changchun_China',1.068881989,44.16387939,125.2763062,6/29/20 0:54,b'AM',0,b'fossil,Changchun_China',Changchun_China,China,Changchun
+b'fossil_Bucharest_Romania',0.502316475,44.57537842,26.41003418,7/2/20 6:18,b'AM',0,b'fossil,Bucharest_Romania',Bucharest_Romania,Romania,Bucharest
+b'fossil_Baghdad_Iraq',0.032037258,33.53204346,44.6343689,7/2/20 6:23,b'AM',0,b'fossil,Baghdad_Iraq',Baghdad_Iraq,Iraq,Baghdad
+b'fossil_Dubai_UAE',0.137516022,24.956604,55.57800293,7/2/20 6:26,b'AM',0,b'fossil,Dubai_UAE',Dubai_UAE,UAE,Dubai
+b'fossil_Khartoum_Sudan',0.215256691,16.019104,33.07348633,7/5/20 7:14,b'AM',0,b'fossil,Khartoum_Sudan',Khartoum_Sudan,Sudan,Khartoum
+b'fossil_Bangalore_India',0.173812866,19.16070557,72.94958496,7/8/20 3:19,b'AM',0,b'fossil,Bangalore_India',Bangalore_India,India,Bangalore
+b'fossil_Madrid_Spain',0.082901001,40.46008301,-4.418334961,8/6/20 12:49,b'AM',0,b'fossil,Madrid_Spain',Madrid_Spain,Spain,Madrid
+b'fossil_St_Louis_USA',0.252659321,38.85253906,-90.42611694,8/12/20 15:52,b'AM',0,b'fossil,St_Louis_USA',St_Louis_USA,USA,St_Louis
+b'fossil_Toronto_Canada',0.591119766,43.68725586,-80.26483154,8/12/20 15:55,b'AM',0,b'fossil,Toronto_Canada',Toronto_Canada,Canada,Toronto
+b'fossil_Taegu_South_Korea',0.413409233,35.52203369,128.3490601,8/14/20 0:22,b'AM',0,b'fossil,Taegu_South_Korea',Taegu_South_Korea,South_Korea,Taegu
+b'fossil_Hangzhou_China',0.411876678,30.79089355,120.387085,8/26/20 3:49,b'AM',0,b'fossil,Hangzhou_China',Hangzhou_China,China,Hangzhou
+b'fossil_Melbourne_Australia',0.252910614,-37.44897461,145.1169434,8/28/20 5:45,b'AM',0,b'fossil,Melbourne_Australia',Melbourne_Australia,Australia,Melbourne
+b'fossil_Medina_Saudi_Arabia',0.176970482,23.8416748,40.51843262,9/4/20 6:08,b'AM',0,b'fossil,Medina_Saudi_Arabia',Medina_Saudi_Arabia,Saudi_Arabia,Medina
+b'fossil_Ho_Chi_Minh_City_Vietnam',0.565337181,11.0737915,106.5117798,9/22/20 8:39,b'AM',0,b'fossil,Ho_Chi_Minh_City_Vietnam',Ho_Chi_Minh_City_Vietnam,Vietnam,Ho_Chi_Minh_City
+b'fossil_Munich_Germany',0.35071373,48.12243652,12.0390625,10/12/20 10:27,b'AM',0,b'fossil,Munich_Germany',Munich_Germany,Germany,Munich
+b'fossil_Amman_Jordan',0.174240112,31.73962402,37.43243408,10/18/20 12:15,b'AM',0,b'fossil,Amman_Jordan',Amman_Jordan,Jordan,Amman
+b'fossil_Hanoi_Vietnam',0.361030579,21.50976563,106.1616211,10/24/20 6:05,b'AM',0,b'fossil,Hanoi_Vietnam',Hanoi_Vietnam,Vietnam,Hanoi
+b'fossil_Sohag_Egypt',0.262582779,26.81060791,32.00390625,10/24/20 10:42,b'AM',0,b'fossil,Sohag_Egypt',Sohag_Egypt,Egypt,Sohag
+b'fossil_Buenos_Aires_Argentina',0.300444603,-33.73510742,-58.30053711,11/5/20 15:38,b'AM',0,b'fossil,Buenos_Aires_Argentina',Buenos_Aires_Argentina,Argentina,Buenos_Aires
+b'fossil_San_Cristobal_Dominican_Republic',0.228240967,18.425354,-70.52734375,11/25/20 19:21,b'AM',0,b'fossil,San_Cristobal_Dominican_Republic',San_Cristobal_Dominican_Republic,Dominican_Republic,San_Cristobal
+b'fossil_Monterrey_Mexico',0.066636086,25.78491211,-99.95428467,12/1/20 19:23,b'AM',0,b'fossil,Monterrey_Mexico',Monterrey_Mexico,Mexico,Monterrey
+b'fossil_Los_Angeles_USA',0.079704285,34.47027588,-118.0940552,12/22/20 20:31,b'AM',0,b'fossil,Los_Angeles_USA',Los_Angeles_USA,USA,Los_Angeles
+b'fossil_Luanda_Angola',0.193102837,-8.766906738,13.53833008,12/26/20 13:00,b'AM',0,b'fossil,Luanda_Angola',Luanda_Angola,Angola,Luanda
+b'fossil_Abu_Dhabi_UAE',0.416790009,24.03442383,54.32293701,5/26/21 11:29,b'AM',0,b'fossil,Abu_Dhabi_UAE',Abu_Dhabi_UAE,UAE,Abu_Dhabi
+b'fossil_Adelaide_Australia',-0.175685883,-34.53399658,138.4979248,12/1/21 23:21,b'AM',0,b'fossil,Adelaide_Australia',Adelaide_Australia,Australia,Adelaide
+b'fossil_Al_Hofuf_Saudi_Arabia',-0.015381813,25.89550781,49.42681885,8/19/21 11:21,b'AM',0,b'fossil,Al_Hofuf_Saudi_Arabia',Al_Hofuf_Saudi_Arabia,Saudi_Arabia,Al_Hofuf
+b'fossil_Almaty_Kazakhstan',0.690555573,43.60852051,77.01263428,8/8/21 11:59,b'AM',0,b'fossil,Almaty_Kazakhstan',Almaty_Kazakhstan,Kazakhstan,Almaty
+b'fossil_Baghdad_Iraq',0.020486355,33.49411011,43.88394165,8/10/21 7:01,b'AM',0,b'fossil,Baghdad_Iraq',Baghdad_Iraq,Iraq,Baghdad
+b'fossil_Baltimore_USA',0.378890038,39.66040039,-76.47644043,8/29/21 14:24,b'AM',0,b'fossil,Baltimore_USA',Baltimore_USA,USA,Baltimore
+b'fossil_Baotou_China',0.172861099,40.55755615,108.8131714,8/15/21 1:40,b'AM',0,b'fossil,Baotou_China',Baotou_China,China,Baotou
+b'fossil_Barcelona_Spain',0.297891617,41.62353516,2.557006836,8/27/21 9:44,b'AM',0,b'fossil,Barcelona_Spain',Barcelona_Spain,Spain,Barcelona
+b'fossil_Beijing_China',0.068499565,39.69537354,116.2683105,12/27/21 2:23,b'AM',0,b'fossil,Beijing_China',Beijing_China,China,Beijing
+b'fossil_Bogota_Colombia',0.313556671,4.587646484,-74.1177063,6/8/21 13:42,b'AM',0,b'fossil,Bogota_Colombia',Bogota_Colombia,Colombia,Bogota
+b'fossil_Brisbane_Australia',0.264296532,-27.60086496,152.2752511,10/7/21 20:54,b'AM',0,b'fossil,Brisbane_Australia',Brisbane_Australia,Australia,Brisbane
+b'fossil_Brussels_Belgium',0.367219925,51.25140381,3.932983398,4/20/21 10:12,b'AM',0,b'fossil,Brussels_Belgium',Brussels_Belgium,Belgium,Brussels
+b'fossil_Bucharest_Romania',0.677429199,44.93441772,26.51455688,6/21/21 5:26,b'AM',0,b'fossil,Bucharest_Romania',Bucharest_Romania,Romania,Bucharest
+b'fossil_Calgary_Canada',-0.035133362,51.3972168,-114.4165039,8/14/21 19:36,b'AM',0,b'fossil,Calgary_Canada',Calgary_Canada,Canada,Calgary
+b'fossil_Changchun_China',0.313169003,43.94534302,125.3337097,1/30/21 6:56,b'AM',0,b'fossil,Changchun_China',Changchun_China,China,Changchun
+b'fossil_Chennai_India',0.162316322,13.16723633,79.9263916,1/29/21 7:31,b'AM',0,b'fossil,Chennai_India',Chennai_India,India,Chennai
+b'fossil_Chifeng_China',0.527507782,42.69415283,118.9532471,8/31/21 0:27,b'AM',0,b'fossil,Chifeng_China',Chifeng_China,China,Chifeng
+b'fossil_Doha_Qatar',0.060520172,24.45159912,52.18948364,2/18/21 11:10,b'AM',0,b'fossil,Doha_Qatar',Doha_Qatar,Qatar,Doha
+b'fossil_Fremantle_Australia',0.1117239,-31.88820394,116.1080322,1/9/21 2:15,b'AM',0,b'fossil,Fremantle_Australia',Fremantle_Australia,Australia,Fremantle
+b'fossil_Guangzhou_China',0.18104744,23.43823242,113.6077881,11/2/21 1:38,b'AM',0,b'fossil,Guangzhou_China',Guangzhou_China,China,Guangzhou
+b'fossil_Guiyang_China',0.280447006,26.23651123,106.8330078,8/29/21 3:39,b'AM',0,b'fossil,Guiyang_China',Guiyang_China,China,Guiyang
+b'fossil_Harbin_China',0.084158421,46.18240356,126.9695129,2/7/21 3:51,b'AM',0,b'fossil,Harbin_China',Harbin_China,China,Harbin
+b'fossil_Ho_Chi_Minh_City_Vietnam',0.587370872,11.71765137,106.8104248,4/22/21 7:24,b'AM',0,b'fossil,Ho_Chi_Minh_City_Vietnam',Ho_Chi_Minh_City_Vietnam,Vietnam,Ho_Chi_Minh_City
+b'fossil_Jakarta_Indonesia',0.346423149,-6.583435059,107.3861084,8/25/21 6:54,b'AM',0,b'fossil,Jakarta_Indonesia',Jakarta_Indonesia,Indonesia,Jakarta
+b'fossil_Janschwalde_Germany',0.687747478,51.56335449,16.20974731,6/8/21 14:05,b'AM',0,b'fossil,Janschwalde_Germany',Janschwalde_Germany,Germany,Janschwalde
+b'fossil_Jeddah_Saudi_Arabia',0.019051552,21.8671875,39.33630371,8/29/21 8:19,b'AM',0,b'fossil,Jeddah_Saudi_Arabia',Jeddah_Saudi_Arabia,Saudi_Arabia,Jeddah
+b'fossil_Kansas_City_USA',0.172991753,39.74182129,-94.70294189,10/25/21 16:59,b'AM',0,b'fossil,Kansas_City_USA',Kansas_City_USA,USA,Kansas_City
+b'fossil_Khartoum_Sudan',0.040956497,15.85876465,32.74053955,8/27/21 9:54,b'AM',0,b'fossil,Khartoum_Sudan',Khartoum_Sudan,Sudan,Khartoum
+b'fossil_Kolkata_India',0.051435947,22.82098389,88.69927979,12/27/21 5:35,b'AM',0,b'fossil,Kolkata_India',Kolkata_India,India,Kolkata
+b'fossil_Lagos_Nigeria',0.00595808,6.969512939,3.730285645,1/25/21 13:39,b'AM',0,b'fossil,Lagos_Nigeria',Lagos_Nigeria,Nigeria,Lagos
+b'fossil_Lahore_Pakistan',0.411702156,31.85882568,74.3739624,1/29/21 9:10,b'AM',0,b'fossil,Lahore_Pakistan',Lahore_Pakistan,Pakistan,Lahore
+b'fossil_Lima_Peru',0.250894547,-11.64685059,-77.03167725,8/8/21 12:57,b'AM',0,b'fossil,Lima_Peru',Lima_Peru,Peru,Lima
+b'fossil_London_UK',0.519723892,51.45483398,-0.050048828,6/8/21 14:03,b'AM',0,b'fossil,London_UK',London_UK,UK,London
+b'fossil_Madrid_Spain',0.249204159,40.74363708,-4.096282959,7/5/21 7:16,b'AM',0,b'fossil,Madrid_Spain',Madrid_Spain,Spain,Madrid
+b'fossil_Manila_Philippines',0.173109055,15.32189941,120.9933472,11/2/21 1:41,b'AM',0,b'fossil,Manila_Philippines',Manila_Philippines,Philippines,Manila
+b'fossil_Medina_Saudi_Arabia',0.000989914,23.23431396,41.07092285,12/27/21 8:41,b'AM',0,b'fossil,Medina_Saudi_Arabia',Medina_Saudi_Arabia,Saudi_Arabia,Medina
+b'fossil_Melbourne_Australia',0.237677097,-37.47488403,144.9682312,3/24/21 2:34,b'AM',0,b'fossil,Melbourne_Australia',Melbourne_Australia,Australia,Melbourne
+b'fossil_Mexico_City_Mexico',0.187734127,19.80230713,-99.13043213,4/28/21 18:12,b'AM',0,b'fossil,Mexico_City_Mexico',Mexico_City_Mexico,Mexico,Mexico_City
+b'fossil_Miami_USA',0.284231186,26.71734619,-80.45056152,12/31/21 14:48,b'AM',0,b'fossil,Miami_USA',Miami_USA,USA,Miami
+b'fossil_Monterrey_Mexico',0.049152374,25.97332764,-100.0801392,5/3/21 15:51,b'AM',0,b'fossil,Monterrey_Mexico',Monterrey_Mexico,Mexico,Monterrey
+b'fossil_Mumbai_India',0.23692131,18.94378662,73.00585938,5/30/21 8:21,b'AM',0,b'fossil,Mumbai_India',Mumbai_India,India,Mumbai
+b'fossil_Munich_Germany',-0.017720222,48.25878906,12.46185303,12/21/21 10:05,b'AM',0,b'fossil,Munich_Germany',Munich_Germany,Germany,Munich
+b'fossil_Nairobi_Kenya',0.163435459,-1.281646729,36.70367432,3/24/21 12:05,b'AM',0,b'fossil,Nairobi_Kenya',Nairobi_Kenya,Kenya,Nairobi
+b'fossil_Orlando_USA',0.244829178,28.56195068,-81.02032471,2/28/21 15:48,b'AM',0,b'fossil,Orlando_USA',Orlando_USA,USA,Orlando
+b'fossil_Portland_USA',0.271819115,45.80322266,-122.9553223,8/14/21 17:58,b'AM',0,b'fossil,Portland_USA',Portland_USA,USA,Portland
+b'fossil_Qingdao_China',0.111834526,36.50909424,120.5012207,3/4/21 0:15,b'AM',0,b'fossil,Qingdao_China',Qingdao_China,China,Qingdao
+b'fossil_Riyadh_Saudi_Arabia',-0.039591789,25.50736491,47.39760335,2/11/21 5:15,b'AM',0,b'fossil,Riyadh_Saudi_Arabia',Riyadh_Saudi_Arabia,Saudi_Arabia,Riyadh
+b'fossil_Rome_Italy',0.152888775,42.37194824,12.44262695,2/27/21 8:44,b'AM',0,b'fossil,Rome_Italy',Rome_Italy,Italy,Rome
+b'fossil_Rostov-on-Don_Russia',0.050495625,47.42529297,39.97381592,2/4/21 10:50,b'AM',0,b'fossil,Rostov-on-Don_Russia',Rostov-on-Don_Russia,Russia,Rostov-on-Don
+b'fossil_Rotterdam_Netherlands',0.879487991,51.98324585,4.525848389,5/31/21 17:09,b'AM',0,b'fossil,Rotterdam_Netherlands',Rotterdam_Netherlands,Netherlands,Rotterdam
+b'fossil_Sacramento_USA',0.723568916,38.93920898,-121.6259766,6/14/21 17:00,b'AM',0,b'fossil,Sacramento_USA',Sacramento_USA,USA,Sacramento
+b'fossil_Samut_Prakan_Thailand',0.125768661,13.78063965,100.9359131,4/2/21 5:12,b'AM',0,b'fossil,Samut_Prakan_Thailand',Samut_Prakan_Thailand,Thailand,Samut_Prakan
+b'fossil_San_Cristobal_Dominican_Republic',0.503599167,19.38098145,-70.29650879,10/25/21 17:07,b'AM',0,b'fossil,San_Cristobal_Dominican_Republic',San_Cristobal_Dominican_Republic,Dominican_Republic,San_Cristobal
+b'fossil_Seattle_USA',0.114484787,47.74957275,-121.9691162,8/9/21 0:20,b'AM',0,b'fossil,Seattle_USA',Seattle_USA,USA,Seattle
+b'fossil_Shah_Alam_Malaysia',0.513526917,4.288085938,100.9359131,8/29/21 5:20,b'AM',0,b'fossil,Shah_Alam_Malaysia',Shah_Alam_Malaysia,Malaysia,Shah_Alam
+b'fossil_Shantou_China',0.218173504,24.01449585,116.2886353,4/29/21 3:29,b'AM',0,b'fossil,Shantou_China',Shantou_China,China,Shantou
+b'fossil_Sohag_Egypt',-0.159806252,26.05249023,32.58343506,3/7/21 5:44,b'AM',0,b'fossil,Sohag_Egypt',Sohag_Egypt,Egypt,Sohag
+b'fossil_St_Louis_USA',0.112887383,38.92956543,-90.16064453,4/5/21 18:31,b'AM',0,b'fossil,St_Louis_USA',St_Louis_USA,USA,St_Louis
+b'fossil_Tabriz_Iran',0.33666563,37.08590698,47.18676758,4/20/21 10:21,b'AM',0,b'fossil,Tabriz_Iran',Tabriz_Iran,Iran,Tabriz
+b'fossil_Taegu_South_Korea',0.182826996,36.5612793,129.3760986,4/7/21 3:01,b'AM',0,b'fossil,Taegu_South_Korea',Taegu_South_Korea,South_Korea,Taegu
+b'fossil_Toronto_Canada',0.530554771,43.2635498,-77.86798096,8/26/21 15:08,b'AM',0,b'fossil,Toronto_Canada',Toronto_Canada,Canada,Toronto
+b'fossil_Urumqi_China',0.111995697,43.20245361,86.95776367,8/19/21 1:41,b'AM',0,b'fossil,Urumqi_China',Urumqi_China,China,Urumqi
+b'fossil_Wenzhou_China',0.247560501,28.19378662,120.5075073,8/8/21 2:20,b'AM',0,b'fossil,Wenzhou_China',Wenzhou_China,China,Wenzhou
+b'fossil_Wuhan_China',0.284254551,31.13861084,113.9255066,8/31/21 2:05,b'AM',0,b'fossil,Wuhan_China',Wuhan_China,China,Wuhan
+b'fossil_Yinchuan_China',0.165138245,38.16644287,106.2736206,12/21/21 5:32,b'AM',0,b'fossil,Yinchuan_China',Yinchuan_China,China,Yinchuan
+b'fossil_Zhengzhou_China',0.13436985,33.52539063,115.4052124,6/21/21 5:44,b'AM',0,b'fossil,Zhengzhou_China',Zhengzhou_China,China,Zhengzhou
+b'fossil_Zibo_China',0.550309181,36.11022949,119.2808228,4/28/21 2:37,b'AM',0,b'fossil,Zibo_China',Zibo_China,China,Zibo
+b'fossil_Abu_Dhabi_UAE',-0.016960144,23.84790039,55.42895508,6/24/22 8:49,b'AM',0,b'fossil,Abu_Dhabi_UAE',Abu_Dhabi_UAE,UAE,Abu_Dhabi
+b'fossil_Almaty_Kazakhstan',0.246757507,43.64385986,76.86633301,8/6/22 7:01,b'AM',0,b'fossil,Almaty_Kazakhstan',Almaty_Kazakhstan,Kazakhstan,Almaty
+b'fossil_Ankara_Turkey',0.151331902,40.69445801,33.49432373,4/7/22 9:31,b'AM',0,b'fossil,Ankara_Turkey',Ankara_Turkey,Turkey,Ankara
+b'fossil_Baabda_Lebanon',0.181001663,34.92504883,36.23583984,6/27/22 7:57,b'AM',0,b'fossil,Baabda_Lebanon',Baabda_Lebanon,Lebanon,Baabda
+b'fossil_Baghdad_Iraq',0.054584503,33.6585083,44.3848877,6/15/22 4:38,b'AM',0,b'fossil,Baghdad_Iraq',Baghdad_Iraq,Iraq,Baghdad
+b'fossil_Bangalore_India',0.103948593,13.84869385,77.9699707,3/27/22 8:42,b'AM',0,b'fossil,Bangalore_India',Bangalore_India,India,Bangalore
+b'fossil_Baotou_China',0.066598415,40.59997559,109.4700928,3/27/22 8:52,b'AM',0,b'fossil,Baotou_China',Baotou_China,China,Baotou
+b'fossil_Barcelona_Spain',0.154646873,42.14733887,1.795471191,6/23/22 11:03,b'AM',0,b'fossil,Barcelona_Spain',Barcelona_Spain,Spain,Barcelona
+b'fossil_Boston_USA',0.027420044,43.09210205,-71.48516846,10/15/22 18:25,b'AM',0,b'fossil,Boston_USA',Boston_USA,USA,Boston
+b'fossil_Brisbane_Australia',0.19265461,-27.35043335,152.4341736,1/4/22 1:07,b'AM',0,b'fossil,Brisbane_Australia',Brisbane_Australia,Australia,Brisbane
+b'fossil_Bucharest_Romania',0.716758728,44.63647461,25.25024414,6/16/22 7:02,b'AM',0,b'fossil,Bucharest_Romania',Bucharest_Romania,Romania,Bucharest
+b'fossil_Buenos_Aires_Argentina',0.289745331,-33.75384521,-57.70855713,1/16/22 18:26,b'AM',0,b'fossil,Buenos_Aires_Argentina',Buenos_Aires_Argentina,Argentina,Buenos_Aires
+b'fossil_Cairo_Egypt',0.122975826,30.44290161,30.90731812,10/17/22 12:17,b'AM',0,b'fossil,Cairo_Egypt',Cairo_Egypt,Egypt,Cairo
+b'fossil_Cape_Town_South_Africa',0.470582962,-33.88769531,18.83337402,1/17/22 13:00,b'AM',0,b'fossil,Cape_Town_South_Africa',Cape_Town_South_Africa,South_Africa,Cape_Town
+b'fossil_Caracas_Venezuela',0.155741692,10.4798584,-66.30999756,2/15/22 20:34,b'AM',0,b'fossil,Caracas_Venezuela',Caracas_Venezuela,Venezuela,Caracas
+b'fossil_Changchun_China',0.405007362,44.12609863,125.6843262,8/21/22 3:05,b'AM',0,b'fossil,Changchun_China',Changchun_China,China,Changchun
+b'fossil_Chicago_USA',0.441696167,43.04736328,-85.85754395,7/26/22 21:54,b'AM',0,b'fossil,Chicago_USA',Chicago_USA,USA,Chicago
+b'fossil_Fremantle_Australia',0.397426605,-31.49493408,115.9521484,9/11/22 0:52,b'AM',0,b'fossil,Fremantle_Australia',Fremantle_Australia,Australia,Fremantle
+b'fossil_Guangzhou_China',0.150506496,23.44082642,113.362915,1/4/22 0:50,b'AM',0,b'fossil,Guangzhou_China',Guangzhou_China,China,Guangzhou
+b'fossil_Harbin_China',0.142385006,45.89498901,125.5966492,8/5/22 4:44,b'AM',0,b'fossil,Harbin_China',Harbin_China,China,Harbin
+b'fossil_Ho_Chi_Minh_City_Vietnam',0.681693077,10.72973633,106.0893555,2/2/22 3:49,b'AM',0,b'fossil,Ho_Chi_Minh_City_Vietnam',Ho_Chi_Minh_City_Vietnam,Vietnam,Ho_Chi_Minh_City
+b'fossil_Istanbul_Turkey',0.244719505,41.10736084,28.06304932,4/2/22 11:54,b'AM',0,b'fossil,Istanbul_Turkey',Istanbul_Turkey,Turkey,Istanbul
+b'fossil_Jeddah_Saudi_Arabia',-0.022489548,21.92254639,39.51623535,10/17/22 12:20,b'AM',0,b'fossil,Jeddah_Saudi_Arabia',Jeddah_Saudi_Arabia,Saudi_Arabia,Jeddah
+b'fossil_Katowice_Poland',0.140836716,50.74206543,18.24981689,4/16/22 10:18,b'AM',0,b'fossil,Katowice_Poland',Katowice_Poland,Poland,Katowice
+b'fossil_Kolkata_India',0.117302895,24.02307129,87.52923584,8/29/22 4:39,b'AM',0,b'fossil,Kolkata_India',Kolkata_India,India,Kolkata
+b'fossil_Manila_Philippines',0.426214218,14.51397705,121.2150269,12/7/22 1:01,b'AM',0,b'fossil,Manila_Philippines',Manila_Philippines,Philippines,Manila
+b'fossil_Maracaibo_Venezuela',0.364172935,11.07263184,-71.8885498,3/22/22 20:20,b'AM',0,b'fossil,Maracaibo_Venezuela',Maracaibo_Venezuela,Venezuela,Maracaibo
+b'fossil_Milan_Italy',0.230017185,45.82589722,10.09112549,4/17/22 7:50,b'AM',0,b'fossil,Milan_Italy',Milan_Italy,Italy,Milan
+b'fossil_Montreal_Canada',0.322558403,46.14770508,-73.95111084,8/20/22 16:15,b'AM',0,b'fossil,Montreal_Canada',Montreal_Canada,Canada,Montreal
+b'fossil_Naples_Italy',0.232879639,40.8605957,14.77075195,6/16/22 6:59,b'AM',0,b'fossil,Naples_Italy',Naples_Italy,Italy,Naples
+b'fossil_Peshawar_Pakistan',0.188894272,34.47137451,71.57751465,10/11/22 4:15,b'AM',0,b'fossil,Peshawar_Pakistan',Peshawar_Pakistan,Pakistan,Peshawar
+b'fossil_Portland_USA',0.13508606,45.86798096,-122.7502441,2/12/22 17:51,b'AM',0,b'fossil,Portland_USA',Portland_USA,USA,Portland
+b'fossil_Pusan_South_Korea',0.224142075,35.74926758,128.9304199,10/12/22 0:23,b'AM',0,b'fossil,Pusan_South_Korea',Pusan_South_Korea,South_Korea,Pusan
+b'fossil_Qingdao_China',0.773949623,30.97753906,114.1539307,8/14/22 23:47,b'AM',0,b'fossil,Qingdao_China',Qingdao_China,China,Qingdao
+b'fossil_Rome_Italy',-0.095659256,41.21575928,14.2824707,2/14/22 13:25,b'AM',0,b'fossil,Rome_Italy',Rome_Italy,Italy,Rome
+b'fossil_Rotterdam_Netherlands',0.24258709,51.98901367,4.53515625,4/16/22 10:15,b'AM',0,b'fossil,Rotterdam_Netherlands',Rotterdam_Netherlands,Netherlands,Rotterdam
+b'fossil_San_Cristobal_Dominican_Republic',0.304071426,18.390625,-70.91851807,3/25/22 19:35,b'AM',0,b'fossil,San_Cristobal_Dominican_Republic',San_Cristobal_Dominican_Republic,Dominican_Republic,San_Cristobal
+b'fossil_San_Francisco_USA',0.187738419,37.46502686,-122.1594849,8/6/22 19:21,b'AM',0,b'fossil,San_Francisco_USA',San_Francisco_USA,USA,San_Francisco
+b'fossil_Santiago_Chile',-0.078930855,-33.21661377,-70.34997559,11/7/22 14:45,b'AM',0,b'fossil,Santiago_Chile',Santiago_Chile,Chile,Santiago
+b'fossil_Sao_Paulo_Brazil',0.503272057,-22.87750244,-46.63433838,11/13/22 9:58,b'AM',0,b'fossil,Sao_Paulo_Brazil',Sao_Paulo_Brazil,Brazil,Sao_Paulo
+b'fossil_Seattle_USA',0.136348724,47.95471191,-121.8088989,10/13/22 21:30,b'AM',0,b'fossil,Seattle_USA',Seattle_USA,USA,Seattle
+b'fossil_Seoul_South_Korea',-0.00596714,37.77746582,126.835083,2/5/22 3:10,b'AM',0,b'fossil,Seoul_South_Korea',Seoul_South_Korea,South_Korea,Seoul
+b'fossil_Shah_Alam_Malaysia',0.394216537,3.340881348,101.7778931,3/2/22 4:10,b'AM',0,b'fossil,Shah_Alam_Malaysia',Shah_Alam_Malaysia,Malaysia,Shah_Alam
+b'fossil_Singapore_Singapore',0.328440666,1.732971191,103.5264893,1/22/22 7:45,b'AM',0,b'fossil,Singapore_Singapore',Singapore_Singapore,Singapore,Singapore
+b'fossil_Sohag_Egypt',-0.001918793,26.78057861,32.13861084,2/14/22 13:31,b'AM',0,b'fossil,Sohag_Egypt',Sohag_Egypt,Egypt,Sohag
+b'fossil_St_Louis_USA',0.272263527,38.32788086,-90.44122314,9/29/22 19:54,b'AM',0,b'fossil,St_Louis_USA',St_Louis_USA,USA,St_Louis
+b'fossil_Toronto_Canada',0.21723032,43.98623657,-80.14907837,9/29/22 19:57,b'AM',0,b'fossil,Toronto_Canada',Toronto_Canada,Canada,Toronto
+b'fossil_Urumqi_China',0.127524376,43.84399414,87.8949585,8/30/22 2:10,b'AM',0,b'fossil,Urumqi_China',Urumqi_China,China,Urumqi
+b'fossil_Vancouver_Canada',0.06733942,49.69256592,-122.7576599,4/20/22 16:20,b'AM',0,b'fossil,Vancouver_Canada',Vancouver_Canada,Canada,Vancouver
+b'fossil_Washington_DC_USA',0.171066284,39.69445801,-77.41772461,8/13/22 20:18,b'AM',0,b'fossil,Washington_DC_USA',Washington_DC_USA,USA,Washington_DC
+b'fossil_Yinchuan_China',-0.034799576,39.18737793,106.0324097,6/16/22 7:17,b'AM',0,b'fossil,Yinchuan_China',Yinchuan_China,China,Yinchuan
+b'fossil_Adelaide_Australia',0.480212212,-34.53439331,138.3034668,5/9/23 0:46,b'AM',0,b'fossil,Adelaide_Australia',Adelaide_Australia,Australia,Adelaide
+b'fossil_Ankara_Turkey',0.116889954,39.92803955,31.89587402,7/24/23 14:04,b'AM',0,b'fossil,Ankara_Turkey',Ankara_Turkey,Turkey,Ankara
+b'fossil_Ashgabat_Turkmenistan',0.106602669,38.49013265,58.37677002,4/10/23 12:24,b'AM',0,b'fossil,Ashgabat_Turkmenistan',Ashgabat_Turkmenistan,Turkmenistan,Ashgabat
+b'fossil_Astana_Kazakhstan',0.068899155,51.4831543,71.77832031,6/5/23 9:42,b'AM',0,b'fossil,Astana_Kazakhstan',Astana_Kazakhstan,Kazakhstan,Astana
+b'fossil_Baghdad_Iraq',0.098108292,30.09541829,40.70510525,4/26/23 7:33,b'AM',0,b'fossil,Baghdad_Iraq',Baghdad_Iraq,Iraq,Baghdad
+b'fossil_Bangalore_India',0.669689178,14.30175781,78.32086182,8/9/23 2:49,b'AM',0,b'fossil,Bangalore_India',Bangalore_India,India,Bangalore
+b'fossil_Bucharest_Romania',0.249646187,45.07727051,25.81011963,4/26/23 7:28,b'AM',0,b'fossil,Bucharest_Romania',Bucharest_Romania,Romania,Bucharest
+b'fossil_Budapest_Hungary',0.149670601,47.73193359,18.20141602,5/31/23 13:37,b'AM',0,b'fossil,Budapest_Hungary',Budapest_Hungary,Hungary,Budapest
+b'fossil_Buenos_Aires_Argentina',0.219227791,-34.91009521,-58.72369385,3/11/23 13:02,b'AM',0,b'fossil,Buenos_Aires_Argentina',Buenos_Aires_Argentina,Argentina,Buenos_Aires
+b'fossil_Caracas_Venezuela',0.245965004,10.27362061,-66.62451172,9/20/23 19:22,b'AM',0,b'fossil,Caracas_Venezuela',Caracas_Venezuela,Venezuela,Caracas
+b'fossil_Dhaka_Bangladesh',0.103614807,25.94696045,92.49438477,1/23/23 8:54,b'AM',0,b'fossil,Dhaka_Bangladesh',Dhaka_Bangladesh,Bangladesh,Dhaka
+b'fossil_Doha_Qatar',0.057445526,25.3494873,51.07574463,7/30/23 9:14,b'AM',0,b'fossil,Doha_Qatar',Doha_Qatar,Qatar,Doha
+b'fossil_Durban_South_Africa',0.221010208,-30.42572021,30.65350342,9/22/23 9:51,b'AM',0,b'fossil,Durban_South_Africa',Durban_South_Africa,South_Africa,Durban
+b'fossil_Esfahan_Iran',0.024407387,33.2911377,51.66278076,2/28/23 5:46,b'AM',0,b'fossil,Esfahan_Iran',Esfahan_Iran,Iran,Esfahan
+b'fossil_Istanbul_Turkey',0.520201683,41.09991455,28.09832764,5/31/23 12:01,b'AM',0,b'fossil,Istanbul_Turkey',Istanbul_Turkey,Turkey,Istanbul
+b'fossil_Johannesburg_South_Africa',0.623568535,-26.04095459,27.38171387,1/9/23 6:50,b'AM',0,b'fossil,Johannesburg_South_Africa',Johannesburg_South_Africa,South_Africa,Johannesburg
+b'fossil_Katowice_Poland',0.072805405,50.60766602,18.82843018,4/10/23 12:16,b'AM',0,b'fossil,Katowice_Poland',Katowice_Poland,Poland,Katowice
+b'fossil_Mashhad_Iran',0.148030281,36.51833089,59.79990641,5/3/23 3:32,b'AM',0,b'fossil,Mashhad_Iran',Mashhad_Iran,Iran,Mashhad
+b'fossil_Mecca_Saudi_Arabia',0.009757042,22.08795166,39.85418701,2/28/23 7:23,b'AM',0,b'fossil,Mecca_Saudi_Arabia',Mecca_Saudi_Arabia,Saudi_Arabia,Mecca
+b'fossil_Medina_Saudi_Arabia',0.019557953,25.15618896,39.60516357,8/19/23 11:02,b'AM',0,b'fossil,Medina_Saudi_Arabia',Medina_Saudi_Arabia,Saudi_Arabia,Medina
+b'fossil_Miami_USA',0.205487251,26.48187256,-80.28137207,4/13/23 12:44,b'AM',0,b'fossil,Miami_USA',Miami_USA,USA,Miami
+b'fossil_Monterrey_Mexico',0.407124519,25.59515381,-100.0574341,5/29/23 19:41,b'AM',0,b'fossil,Monterrey_Mexico',Monterrey_Mexico,Mexico,Monterrey
+b'fossil_Mumbai_India',0.146633148,19.36108398,72.86090088,3/27/23 9:00,b'AM',0,b'fossil,Mumbai_India',Mumbai_India,India,Mumbai
+b'fossil_Munich_Germany',0.283080101,48.3223877,10.64715576,4/10/23 10:37,b'AM',0,b'fossil,Munich_Germany',Munich_Germany,Germany,Munich
+b'fossil_Nairobi_Kenya',0.118644714,-1.340087891,36.22546387,7/27/23 9:55,b'AM',0,b'fossil,Nairobi_Kenya',Nairobi_Kenya,Kenya,Nairobi
+b'fossil_New_Delhi_India',0.247529984,28.57733154,77.50036621,6/11/23 3:10,b'AM',0,b'fossil,New_Delhi_India',New_Delhi_India,India,New_Delhi
+b'fossil_Paris_France',0.602493763,49.32061768,2.220581055,4/13/23 13:02,b'AM',0,b'fossil,Paris_France',Paris_France,France,Paris
+b'fossil_Peshawar_Pakistan',0.047140598,34.00453186,71.06419373,4/9/23 5:06,b'AM',0,b'fossil,Peshawar_Pakistan',Peshawar_Pakistan,Pakistan,Peshawar
+b'fossil_Riyadh_Saudi_Arabia',0.113213062,25.34085083,46.71859741,6/24/23 8:45,b'AM',0,b'fossil,Riyadh_Saudi_Arabia',Riyadh_Saudi_Arabia,Saudi_Arabia,Riyadh
+b'fossil_Rome_Italy',0.122864723,42.60351563,12.17303467,8/30/23 6:54,b'AM',0,b'fossil,Rome_Italy',Rome_Italy,Italy,Rome
+b'fossil_Rostov-on-Don_Russia',0.453603745,47.29675293,40.70922852,8/21/23 7:45,b'AM',0,b'fossil,Rostov-on-Don_Russia',Rostov-on-Don_Russia,Russia,Rostov-on-Don
+b'fossil_San_Cristobal_Dominican_Republic',0.475029945,18.43463135,-70.88641357,9/22/23 19:25,b'AM',0,b'fossil,San_Cristobal_Dominican_Republic',San_Cristobal_Dominican_Republic,Dominican_Republic,San_Cristobal
+b'fossil_San_Francisco_USA',0.167280674,37.78079224,-122.3560181,3/27/23 23:02,b'AM',0,b'fossil,San_Francisco_USA',San_Francisco_USA,USA,San_Francisco
+b'fossil_Seoul_South_Korea',0.086227894,36.93392944,127.8374023,4/13/23 6:58,b'AM',0,b'fossil,Seoul_South_Korea',Seoul_South_Korea,South_Korea,Seoul
+b'fossil_Singapore_Singapore',0.31758213,1.570800781,104.0994263,5/27/23 5:40,b'AM',0,b'fossil,Singapore_Singapore',Singapore_Singapore,Singapore,Singapore
+b'fossil_St_Petersburg_USA',0.131221771,27.29492188,-82.50579834,2/24/23 16:39,b'AM',0,b'fossil,St_Petersburg_USA',St_Petersburg_USA,USA,St_Petersburg
+b'fossil_Sydney_Australia',0.089395523,-33.00415039,150.930542,5/4/23 1:36,b'AM',0,b'fossil,Sydney_Australia',Sydney_Australia,Australia,Sydney
+b'fossil_Tabriz_Iran',0.013203621,38.39117432,46.09405518,7/23/23 13:18,b'AM',0,b'fossil,Tabriz_Iran',Tabriz_Iran,Iran,Tabriz
+b'fossil_Tehran_Iran',-0.073999405,35.81506348,50.74121094,6/5/23 8:00,b'AM',0,b'fossil,Tehran_Iran',Tehran_Iran,Iran,Tehran
+b'fossil_Tel_Aviv-Yafo_Israel',0.105051994,31.6541748,34.9085083,6/23/23 9:31,b'AM',0,b'fossil,Tel_Aviv-Yafo_Israel',Tel_Aviv-Yafo_Israel,Israel,Tel_Aviv-Yafo
+b'fossil_Urumqi_China',0.162317276,43.82722982,86.46724447,2/6/23 5:42,b'AM',0,b'fossil,Urumqi_China',Urumqi_China,China,Urumqi
+b'fossil_Ad_Damman_Saudi_Arabia',-0.19349575,26.17767334,49.71783447,9/1/24 4:22,b'AM',0,b'fossil,Ad_Damman_Saudi_Arabia',Ad_Damman_Saudi_Arabia,Saudi_Arabia,Ad_Damman
+b'fossil_Al_Ain_UAE',0.06055069,24.21820068,56.01611328,11/30/24 7:12,b'AM',0,b'fossil,Al_Ain_UAE',Al_Ain_UAE,UAE,Al_Ain
+b'fossil_Ankara_Turkey',-0.027833939,39.97467041,31.96844482,10/5/24 8:25,b'AM',0,b'fossil,Ankara_Turkey',Ankara_Turkey,Turkey,Ankara
+b'fossil_Astana_Kazakhstan',0.072266579,51.48457336,71.70574951,10/2/24 9:21,b'AM',0,b'fossil,Astana_Kazakhstan',Astana_Kazakhstan,Kazakhstan,Astana
+b'fossil_Atlanta_USA',0.552088737,33.67382813,-85.27587891,8/6/24 15:09,b'AM',0,b'fossil,Atlanta_USA',Atlanta_USA,USA,Atlanta
+b'fossil_Baghdad_Iraq',0.154186249,33.27787272,44.43870036,8/25/24 6:42,b'AM',0,b'fossil,Baghdad_Iraq',Baghdad_Iraq,Iraq,Baghdad
+b'fossil_Baotou_China',-0.033460617,40.63293457,108.7888794,10/6/24 3:00,b'AM',0,b'fossil,Baotou_China',Baotou_China,China,Baotou
+b'fossil_Beijing_China',0.265148163,40.61291504,116.1550903,10/16/24 4:44,b'AM',0,b'fossil,Beijing_China',Beijing_China,China,Beijing
+b'fossil_Bogota_Colombia',0.355858803,4.509399414,-74.70349121,10/1/24 14:27,b'AM',0,b'fossil,Bogota_Colombia',Bogota_Colombia,Colombia,Bogota
+b'fossil_Bucharest_Romania',0.060980797,44.76580811,25.6829834,8/25/24 6:37,b'AM',0,b'fossil,Bucharest_Romania',Bucharest_Romania,Romania,Bucharest
+b'fossil_Cairo_Egypt',0.082881927,30.76062012,31.25036621,10/23/24 8:33,b'AM',0,b'fossil,Cairo_Egypt',Cairo_Egypt,Egypt,Cairo
+b'fossil_Caracas_Venezuela',0.202316284,9.981628418,-67.82940674,11/27/24 15:40,b'AM',0,b'fossil,Caracas_Venezuela',Caracas_Venezuela,Venezuela,Caracas
+b'fossil_Changchun_China',1.040016174,44.0960083,125.7008057,8/28/24 22:50,b'AM',0,b'fossil,Changchun_China',Changchun_China,China,Changchun
+b'fossil_Dubai_UAE',-0.057723999,27.168396,53.95397949,8/25/24 6:45,b'AM',0,b'fossil,Dubai_UAE',Dubai_UAE,UAE,Dubai
+b'fossil_Durban_South_Africa',0.222084522,-28.93737793,31.1781311,7/22/24 9:38,b'AM',0,b'fossil,Durban_South_Africa',Durban_South_Africa,South_Africa,Durban
+b'fossil_Esfahan_Iran',0.096502304,33.05615234,51.75109863,10/15/24 10:13,b'AM',0,b'fossil,Esfahan_Iran',Esfahan_Iran,Iran,Esfahan
+b'fossil_Mashhad_Iran',-0.159156799,36.15081787,60.43530273,12/20/24 7:10,b'AM',0,b'fossil,Mashhad_Iran',Mashhad_Iran,Iran,Mashhad
+b'fossil_Mecca_Saudi_Arabia',0.182357788,22.15087891,39.81207275,10/23/24 8:36,b'AM',0,b'fossil,Mecca_Saudi_Arabia',Mecca_Saudi_Arabia,Saudi_Arabia,Mecca
+b'fossil_Mexico_City_Mexico',0.16297245,19.23217773,-99.92181396,8/6/24 15:04,b'AM',0,b'fossil,Mexico_City_Mexico',Mexico_City_Mexico,Mexico,Mexico_City
+b'fossil_Miami_USA',-0.006118298,25.62960815,-80.78088379,10/1/24 16:07,b'AM',0,b'fossil,Miami_USA',Miami_USA,USA,Miami
+b'fossil_Monterrey_Mexico',-0.019766808,26.04351807,-100.4521484,12/5/24 15:37,b'AM',0,b'fossil,Monterrey_Mexico',Monterrey_Mexico,Mexico,Monterrey
+b'fossil_Mumbai_India',0.157636642,19.27685547,72.95559692,9/30/24 6:02,b'AM',0,b'fossil,Mumbai_India',Mumbai_India,India,Mumbai
+b'fossil_Nairobi_Kenya',0.068627357,-0.81048584,36.74407959,11/30/24 7:03,b'AM',0,b'fossil,Nairobi_Kenya',Nairobi_Kenya,Kenya,Nairobi
+b'fossil_New_Delhi_India',0.029417038,28.43835449,77.18280029,11/29/24 6:28,b'AM',0,b'fossil,New_Delhi_India',New_Delhi_India,India,New_Delhi
+b'fossil_Peshawar_Pakistan',0.274674416,36.59979248,74.99267578,7/24/24 9:57,b'AM',0,b'fossil,Peshawar_Pakistan',Peshawar_Pakistan,Pakistan,Peshawar
+b'fossil_Phoenix_USA',0.064693451,33.1796875,-112.0240479,7/25/24 21:31,b'AM',0,b'fossil,Phoenix_USA',Phoenix_USA,USA,Phoenix
+b'fossil_Rio_de_Janeiro_Brazil',0.733521461,-22.89959717,-43.02520752,10/2/24 10:25,b'AM',0,b'fossil,Rio_de_Janeiro_Brazil',Rio_de_Janeiro_Brazil,Brazil,Rio_de_Janeiro
+b'fossil_Rome_Italy',0.171198845,42.20166016,12.77111816,8/6/24 15:29,b'AM',0,b'fossil,Rome_Italy',Rome_Italy,Italy,Rome
+b'fossil_Samut_Prakan_Thailand',0.138338089,14.0526123,100.5062256,11/27/24 4:52,b'AM',0,b'fossil,Samut_Prakan_Thailand',Samut_Prakan_Thailand,Thailand,Samut_Prakan
+b'fossil_Santiago_Chile',0.286979675,-34.11767578,-70.92437744,11/17/24 17:07,b'AM',0,b'fossil,Santiago_Chile',Santiago_Chile,Chile,Santiago
+b'fossil_Sao_Paulo_Brazil',0.339076042,-23.87585449,-46.69256592,9/2/24 13:09,b'AM',0,b'fossil,Sao_Paulo_Brazil',Sao_Paulo_Brazil,Brazil,Sao_Paulo
+b'fossil_Seoul_South_Korea',0.416074753,31.74151611,119.7566528,8/1/24 3:35,b'AM',0,b'fossil,Seoul_South_Korea',Seoul_South_Korea,South_Korea,Seoul
+b'fossil_St_Louis_USA',0.151281357,38.42004395,-90.07598877,10/5/24 16:09,b'AM',0,b'fossil,St_Louis_USA',St_Louis_USA,USA,St_Louis
+b'fossil_Tehran_Iran',0.085359573,36.32434082,51.38885498,12/15/24 9:37,b'AM',0,b'fossil,Tehran_Iran',Tehran_Iran,Iran,Tehran
+b'fossil_Yinchuan_China',0.017971992,39.22546387,105.9645996,10/10/24 7:55,b'AM',0,b'fossil,Yinchuan_China',Yinchuan_China,China,Yinchuan
+b'fossil_Abu_Dhabi_UAE',0.187692642,23.55334473,55.53820801,8/29/2025 4:46:12,b'AM',0,b'fossil,Abu_Dhabi_UAE',Abu_Dhabi_UAE,UAE,Abu_Dhabi
+b'fossil_Ad_Damman_Saudi_Arabia',0.07294178,26.2097168,49.68231201,4/9/25 13:07,b'AM',0,b'fossil,Ad_Damman_Saudi_Arabia',Ad_Damman_Saudi_Arabia,Saudi_Arabia,Ad_Damman
+b'fossil_Ahvaz_Iran',0.280296326,32.05407715,48.55413818,6/30/25 4:21,b'AM',0,b'fossil,Ahvaz_Iran',Ahvaz_Iran,Iran,Ahvaz
+b'fossil_Al_Hofuf_Saudi_Arabia',0.286675453,25.19543457,49.25244141,9/1/25 3:55,b'AM',0,b'fossil,Al_Hofuf_Saudi_Arabia',Al_Hofuf_Saudi_Arabia,Saudi_Arabia,Al_Hofuf
+b'fossil_Almaty_Kazakhstan',0.056524754,20.28878784,99.28292847,2/5/25 5:03,b'AM',0,b'fossil,Almaty_Kazakhstan',Almaty_Kazakhstan,Kazakhstan,Almaty
+b'fossil_Ankara_Turkey',0.246031761,38.32073975,35.88604736,2/2/25 8:57,b'AM',0,b'fossil,Ankara_Turkey',Ankara_Turkey,Turkey,Ankara
+b'fossil_Ashgabat_Turkmenistan',0.098871231,38.25082397,58.69128418,6/14/25 9:15,b'AM',0,b'fossil,Ashgabat_Turkmenistan',Ashgabat_Turkmenistan,Turkmenistan,Ashgabat
+b'fossil_Astana_Kazakhstan',0.173884392,50.71856689,70.82849121,2/11/25 5:03,b'AM',0,b'fossil,Astana_Kazakhstan',Astana_Kazakhstan,Kazakhstan,Astana
+b'fossil_Athens_Greece',0.304058075,38.05609131,24.52044678,4/23/25 8:16,b'AM',0,b'fossil,Athens_Greece',Athens_Greece,Greece,Athens
+b'fossil_Atlanta_USA',0.146165848,34.10559082,-84.23400879,4/12/25 20:01,b'AM',0,b'fossil,Atlanta_USA',Atlanta_USA,USA,Atlanta
+b'fossil_Baabda_Lebanon',0.135085106,32.6367391,38.97190348,6/17/25 10:00,b'AM',0,b'fossil,Baabda_Lebanon',Baabda_Lebanon,Lebanon,Baabda
+b'fossil_Baghdad_Iraq',0.163603783,34.07867432,44.24072266,8/6/25 13:39,b'AM',0,b'fossil,Baghdad_Iraq',Baghdad_Iraq,Iraq,Baghdad
+b'fossil_Baltimore_USA',0.074490547,40.05786133,-76.9473877,2/24/25 13:35,b'AM',0,b'fossil,Baltimore_USA',Baltimore_USA,USA,Baltimore
+b'fossil_Bogota_Colombia',-0.001953125,3.270141602,-72.84161377,8/17/25 19:01,b'AM',0,b'fossil,Bogota_Colombia',Bogota_Colombia,Colombia,Bogota
+b'fossil_Brisbane_Australia',0.175276756,-27.74578857,153.0778198,3/15/25 4:09,b'AM',0,b'fossil,Brisbane_Australia',Brisbane_Australia,Australia,Brisbane
+b'fossil_Brussels_Belgium',0.411230087,50.5647583,4.697631836,8/6/25 13:30,b'AM',0,b'fossil,Brussels_Belgium',Brussels_Belgium,Belgium,Brussels
+b'fossil_Bucharest_Romania',0.197734833,45.11401367,25.69769287,2/19/25 8:09,b'AM',0,b'fossil,Bucharest_Romania',Bucharest_Romania,Romania,Bucharest
+b'fossil_Budapest_Hungary',0.268540382,44.96303885,8.295549665,4/3/25 11:14,b'AM',0,b'fossil,Budapest_Hungary',Budapest_Hungary,Hungary,Budapest
+b'fossil_Buenos_Aires_Argentina',0.476921082,-34.83380127,-59.47479248,3/12/25 18:51,b'AM',0,b'fossil,Buenos_Aires_Argentina',Buenos_Aires_Argentina,Argentina,Buenos_Aires
+b'fossil_Cairo_Egypt',-0.148880959,29.89385986,31.43212891,3/30/25 9:40,b'AM',0,b'fossil,Cairo_Egypt',Cairo_Egypt,Egypt,Cairo
+b'fossil_Calgary_Canada',0.001130104,51.47216797,-115.3300781,2/6/25 19:52,b'AM',0,b'fossil,Calgary_Canada',Calgary_Canada,Canada,Calgary
+b'fossil_Changchun_China',0.136982918,41.9649353,121.757487,2/5/25 1:58,b'AM',0,b'fossil,Changchun_China',Changchun_China,China,Changchun
+b'fossil_Chifeng_China',0.207380295,42.68084717,118.8317261,6/17/25 3:45,b'AM',0,b'fossil,Chifeng_China',Chifeng_China,China,Chifeng
+b'fossil_Chios_Turkey',0.182061195,39.81451416,29.1930542,6/17/25 9:58,b'AM',0,b'fossil,Chios_Turkey',Chios_Turkey,Turkey,Chios
+b'fossil_Dalian_China',0.144331932,39.57366943,121.4578857,4/27/25 23:42,b'AM',0,b'fossil,Dalian_China',Dalian_China,China,Dalian
+b'fossil_Dubai_UAE',0.110162735,25.02905273,55.20440674,2/19/25 8:17,b'AM',0,b'fossil,Dubai_UAE',Dubai_UAE,UAE,Dubai
+b'fossil_Durban_South_Africa',0.135497093,-29.33459473,30.7734375,7/15/25 11:46,b'AM',0,b'fossil,Durban_South_Africa',Durban_South_Africa,South_Africa,Durban
+b'fossil_Esfahan_Iran',0.12755394,32.58209229,52.33230591,6/23/25 6:48,b'AM',0,b'fossil,Esfahan_Iran',Esfahan_Iran,Iran,Esfahan
+b'fossil_Fremantle_Australia',0.504448891,-32.0168457,116.1887207,2/14/25 9:28,b'AM',0,b'fossil,Fremantle_Australia',Fremantle_Australia,Australia,Fremantle
+b'fossil_Guadalajara_Mexico',0.549480438,20.39160156,-102.635376,8/22/25 18:04,b'AM',0,b'fossil,Guadalajara_Mexico',Guadalajara_Mexico,Mexico,Guadalajara
+b'fossil_Harbin_China',0.150638103,46.41162109,126.1847534,2/17/25 1:59,b'AM',0,b'fossil,Harbin_China',Harbin_China,China,Harbin
+b'fossil_Ho_Chi_Minh_City_Vietnam',0.25387001,11.40960693,106.8007813,9/1/25 0:54,b'AM',0,b'fossil,Ho_Chi_Minh_City_Vietnam',Ho_Chi_Minh_City_Vietnam,Vietnam,Ho_Chi_Minh_City
+b'fossil_Jinan_China',0.032375336,36.99438477,117.1856689,2/20/25 2:47,b'AM',0,b'fossil,Jinan_China',Jinan_China,China,Jinan
+b'fossil_Johannesburg_South_Africa',0.086215973,-26.23907471,27.32531738,9/16/25 11:22,b'AM',0,b'fossil,Johannesburg_South_Africa',Johannesburg_South_Africa,South_Africa,Johannesburg
+b'fossil_Katowice_Poland',0.298047543,50.62304688,18.48336792,6/3/25 13:10,b'AM',0,b'fossil,Katowice_Poland',Katowice_Poland,Poland,Katowice
+b'fossil_Khartoum_Sudan',-0.015255928,16.20523071,32.68228149,9/1/25 5:31,b'AM',0,b'fossil,Khartoum_Sudan',Khartoum_Sudan,Sudan,Khartoum
+b'fossil_Lahore_Pakistan',0.19342804,30.83129883,74.99041748,4/22/25 6:00,b'AM',0,b'fossil,Lahore_Pakistan',Lahore_Pakistan,Pakistan,Lahore
+b'fossil_Lima_Peru',0.387626648,-10.48797607,-76.16491699,6/3/25 12:42,b'AM',0,b'fossil,Lima_Peru',Lima_Peru,Peru,Lima
+b'fossil_Los_Angeles_USA',0.150799274,34.68768311,-118.2676086,8/22/25 17:59,b'AM',0,b'fossil,Los_Angeles_USA',Los_Angeles_USA,USA,Los_Angeles
+b'fossil_Luanda_Angola',0.266374588,-7.609802246,14.44793701,9/27/25 8:54,b'AM',0,b'fossil,Luanda_Angola',Luanda_Angola,Angola,Luanda
+b'fossil_Madrid_Spain',0.108639717,39.64825439,-1.904418945,4/19/25 11:23,b'AM',0,b'fossil,Madrid_Spain',Madrid_Spain,Spain,Madrid
+b'fossil_Mashhad_Iran',0.16595602,36.87054443,59.7204895,9/28/25 8:23,b'AM',0,b'fossil,Mashhad_Iran',Mashhad_Iran,Iran,Mashhad
+b'fossil_Medina_Saudi_Arabia',0.058918953,25.3069458,40.05190023,4/23/25 8:21,b'AM',0,b'fossil,Medina_Saudi_Arabia',Medina_Saudi_Arabia,Saudi_Arabia,Medina
+b'fossil_Melbourne_Australia',0.034744263,-37.65625,144.3022461,5/12/25 5:03,b'AM',0,b'fossil,Melbourne_Australia',Melbourne_Australia,Australia,Melbourne
+b'fossil_Milan_Italy',0.158331871,45.72509766,9.489868164,4/11/25 12:58,b'AM',0,b'fossil,Milan_Italy',Milan_Italy,Italy,Milan
+b'fossil_Monterrey_Mexico',0.308590889,26.32684326,-100.1795654,9/27/25 18:23,b'AM',0,b'fossil,Monterrey_Mexico',Monterrey_Mexico,Mexico,Monterrey
+b'fossil_Munich_Germany',0.558001518,46.87637329,41.02059937,6/18/25 5:51,b'AM',0,b'fossil,Munich_Germany',Munich_Germany,Germany,Munich
+b'fossil_Paris_France',0.2582798,49.36879476,2.096293132,2/5/25 11:19,b'AM',0,b'fossil,Paris_France',Paris_France,France,Paris
+b'fossil_Portland_USA',0.17320919,43.84359741,-115.8499756,4/17/25 19:06,b'AM',0,b'fossil,Portland_USA',Portland_USA,USA,Portland
+b'fossil_Prague_Czech_Republic',0.564353943,42.97013346,31.55124919,6/17/25 8:16,b'AM',0,b'fossil,Prague_Czech_Republic',Prague_Czech_Republic,Czech_Republic,Prague
+b'fossil_Rio_de_Janeiro_Brazil',0.483108521,-22.85510254,-43.53955078,1/6/25 10:59,b'AM',0,b'fossil,Rio_de_Janeiro_Brazil',Rio_de_Janeiro_Brazil,Brazil,Rio_de_Janeiro
+b'fossil_Riyadh_Saudi_Arabia',-0.169593811,24.95449829,46.82321167,2/4/25 5:43,b'AM',0,b'fossil,Riyadh_Saudi_Arabia',Riyadh_Saudi_Arabia,Saudi_Arabia,Riyadh
+b'fossil_Rome_Italy',0.134480476,39.87652588,9.055145264,9/30/25 11:29,b'AM',0,b'fossil,Rome_Italy',Rome_Italy,Italy,Rome
+b'fossil_Rostov-on-Don_Russia',0.093338966,47.42837524,40.04855347,2/5/25 8:11,b'AM',0,b'fossil,Rostov-on-Don_Russia',Rostov-on-Don_Russia,Russia,Rostov-on-Don
+b'fossil_San_Jose_USA',0.121476173,37.27203369,-121.7677002,7/27/25 21:14,b'AM',0,b'fossil,San_Jose_USA',San_Jose_USA,USA,San_Jose
+b'fossil_Santiago_Chile',0.016033649,-33.13085938,-70.46728516,3/18/25 17:13,b'AM',0,b'fossil,Santiago_Chile',Santiago_Chile,Chile,Santiago
+b'fossil_Sao_Paulo_Brazil',0.664148331,-22.82391357,-46.68347168,5/8/25 10:51,b'AM',0,b'fossil,Sao_Paulo_Brazil',Sao_Paulo_Brazil,Brazil,Sao_Paulo
+b'fossil_Seattle_USA',0.241230965,47.89605713,-123.0749512,8/11/25 17:08,b'AM',0,b'fossil,Seattle_USA',Seattle_USA,USA,Seattle
+b'fossil_Shanghai_China',0.399759293,31.97558594,121.2544556,8/22/25 2:32,b'AM',0,b'fossil,Shanghai_China',Shanghai_China,China,Shanghai
+b'fossil_Shenyang_China',0.309072495,42.36692301,123.3551432,2/11/25 5:13,b'AM',0,b'fossil,Shenyang_China',Shenyang_China,China,Shenyang
+b'fossil_Sohag_Egypt',0.297190189,27.02316284,31.61447144,2/8/25 13:53,b'AM',0,b'fossil,Sohag_Egypt',Sohag_Egypt,Egypt,Sohag
+b'fossil_Tabriz_Iran',0.128952026,36.5664978,42.06390381,4/3/25 8:03,b'AM',0,b'fossil,Tabriz_Iran',Tabriz_Iran,Iran,Tabriz
+b'fossil_Tehran_Iran',0.154338837,36.46282959,51.19104004,10/15/25 9:19,b'AM',0,b'fossil,Tehran_Iran',Tehran_Iran,Iran,Tehran
+b'fossil_Tel_Aviv-Yafo_Israel',-0.019371986,26.59481201,28.8373291,4/3/25 8:01,b'AM',0,b'fossil,Tel_Aviv-Yafo_Israel',Tel_Aviv-Yafo_Israel,Israel,Tel_Aviv-Yafo
+b'fossil_Urumqi_China',0.467520714,44.015625,87.94085693,6/20/25 4:27,b'AM',0,b'fossil,Urumqi_China',Urumqi_China,China,Urumqi
+b'fossil_Vancouver_Canada',0.330445766,49.75814819,-122.6768188,4/12/25 19:52,b'AM',0,b'fossil,Vancouver_Canada',Vancouver_Canada,Canada,Vancouver
+b'fossil_Vienna_Austria',0.62370491,48.23605347,15.6678772,6/11/25 8:18,b'AM',0,b'fossil,Vienna_Austria',Vienna_Austria,Austria,Vienna
+b'fossil_Wuhan_China',0.497437477,30.76861572,114.7369385,8/17/25 4:56,b'AM',0,b'fossil,Wuhan_China',Wuhan_China,China,Wuhan
+b'fossil_Xian_China',0.172829628,29.37481689,102.5159912,4/3/25 3:23,b'AM',0,b'fossil,Xian_China',Xian_China,China,Xian
+b'fossil_Yinchuan_China',0.516085625,36.34533691,110.4000651,2/7/25 8:24,b'AM',0,b'fossil,Yinchuan_China',Yinchuan_China,China,Yinchuan
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,

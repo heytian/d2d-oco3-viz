@@ -14,18 +14,10 @@ let SIFCO2slider = function (p) {
   let draggingSlider = false;
 
   let timeSlider;
-
-  let mapX1 = 50;
-  let mapX2 = 500;
-  let mapY1 = 50;
-  let mapY2 = 600;
-
-  let legendX = 550;
-  let legendY = 50;
-  let legendHeight = 130;
-  let legendWidth = 15;
-
   let parent;
+
+  let mapX1, mapX2, mapY1, mapY2;
+  let legendX, legendY, legendHeight, legendWidth;
 
   p.preload = function () {
     co2Table = p.loadTable("../data/CO2_combined.csv", "csv", "header");
@@ -34,10 +26,20 @@ let SIFCO2slider = function (p) {
 
   p.setup = function () {
     parent = document.getElementById("SIFCO2slider");
-    let canvas = p.createCanvas(660, 660);
+    let canvas = p.createCanvas(650, 400); // adjust canvas dimensions as desired
     canvas.parent(parent);
     p.colorMode(p.HSB);
-    p.noStroke();
+    p.textFont('Helvetica');
+
+    mapX1 = p.width * 0.07;
+    mapX2 = p.width * 0.7;
+    mapY1 = p.height * 0.07;
+    mapY2 = p.height * 0.85;
+
+    legendX = p.width * 0.78;
+    legendY = p.height * 0.07;
+    legendHeight = p.height * 0.25;
+    legendWidth = p.width * 0.02;
 
     layerSliderY = (mapY1 + mapY2) / 2;
 
@@ -83,28 +85,44 @@ let SIFCO2slider = function (p) {
 
     timeSlider = p.createSlider(0, years.length - 1, 0, 1);
     timeSlider.parent(parent);
-    timeSlider.position(mapX1, mapY2 + p.height * 0.03);
-    timeSlider.style('width', (mapX2 - mapX1) + 'px');
     timeSlider.input(() => selectedYear = years[timeSlider.value()]);
   }
 
   p.draw = function () {
     p.background(0);
+
+    mapX1 = p.width * 0.07;
+    mapX2 = p.width * 0.7;
+    mapY1 = p.height * 0.07;
+    mapY2 = p.height * 0.85;
+
+    legendX = p.width * 0.78;
+    legendY = p.height * 0.07;
+    legendHeight = p.height * 0.25;
+    legendWidth = p.width * 0.02;
+
+    layerSliderY = p.constrain(layerSliderY, mapY1, mapY2);
+
     timeSlider.position(mapX1, mapY2 + p.height * 0.03);
     timeSlider.style('width', (mapX2 - mapX1) + 'px');
+
     drawYear(selectedYear);
+
     p.stroke(255);
-    p.strokeWeight(2);
+    p.strokeWeight(p.width * 0.003);
     p.line(mapX1, layerSliderY, mapX2, layerSliderY);
+
     p.fill(255);
     p.noStroke();
-    p.textSize(14);
+    p.textSize(p.width * 0.02);
     p.textAlign(p.LEFT, p.BOTTOM);
-    p.text("SIF above, CO2 below", mapX2 + 10, layerSliderY);
+    p.text("SIF above, CO2 below", mapX2 + p.width * 0.015, layerSliderY);
+
     p.fill(255);
-    p.textSize(18);
+    p.textSize(p.width * 0.03);
     p.textAlign(p.LEFT, p.TOP);
-    p.text("Year: " + selectedYear, mapX1, 20);
+    p.text("Year: " + selectedYear, mapX1, mapY1 - p.height * 0.03);
+
     drawLegend();
   }
 
@@ -139,35 +157,23 @@ let SIFCO2slider = function (p) {
     if (p.mouseY > layerSliderY - 8 && p.mouseY < layerSliderY + 8) draggingSlider = true;
   }
   p.mouseReleased = function () { draggingSlider = false; }
-  p.mouseDragged = function () {
-    if (draggingSlider) layerSliderY = p.constrain(p.mouseY, mapY1, mapY2);
-  }
+  p.mouseDragged = function () { if (draggingSlider) layerSliderY = p.constrain(p.mouseY, mapY1, mapY2); }
 
-  function drawLegend() {
+  p.drawLegend = function () {
+    p.push();
+    const legendX = p.width - 100;
+    const legendY = 20;
     p.textSize(12);
-    p.textAlign(p.LEFT, p.CENTER);
-    for (let i = 0; i <= legendHeight; i++) {
-      let inter = p.map(i, 0, legendHeight, minCO2, maxCO2);
-      let c = p.color(p.map(inter, minCO2, maxCO2, 0, 180), 80, 100);
-      p.stroke(c);
-      p.line(legendX, legendY + i, legendX + legendWidth, legendY + i);
-    }
-    p.noStroke();
-    p.fill(255);
-    p.text("CO2", legendX + 20, legendY + legendHeight / 2);
-    p.text(minCO2, legendX, legendY + legendHeight);
-    p.text(maxCO2, legendX, legendY);
-    for (let i = 0; i <= legendHeight; i++) {
-      let inter = p.map(i, 0, legendHeight, maxSIF, minSIF);
-      let c = p.color(p.map(inter, minSIF, maxSIF, 180, 360), 80, 100);
-      p.stroke(c);
-      p.line(legendX + 50, legendY + i, legendX + 50 + legendWidth, legendY + i);
-    }
-    p.noStroke();
-    p.fill(255);
-    p.text("SIF", legendX + 75, legendY + legendHeight / 2);
-    p.text(minSIF.toFixed(2), legendX + 50, legendY + legendHeight);
-    p.text(maxSIF.toFixed(2), legendX + 50, legendY);
+    p.fill(0);
+    p.text("Season Colors:", legendX, legendY);
+
+    ["Winter", "Spring", "Summer", "Fall"].forEach((s, i) => {
+      p.fill(seasonColors[s]);
+      p.rect(legendX, legendY + 15 + i * 20, 12, 12);
+      p.fill(0);
+      p.text(s, legendX + 20, legendY + 27 + i * 20);
+    });
+    p.pop();
   }
 
 };

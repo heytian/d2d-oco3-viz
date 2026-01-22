@@ -1,331 +1,176 @@
-let MovingBars = function(p) {
+const MovingBars = (p) => {
 
     let cities = [];
-
-    let topColor;
-    let bottomColor;
-
     let months = [];
     let monthKeys = [];
     let currentMonthIndex = 0;
 
-    let co2Table;
-    let sifTable;
+    let co2Table, sifTable;
     let co2Series = {};
     let sifSeries = {};
 
     let co2Min = Infinity;
     let co2Max = -Infinity;
-    let sifMin = 0;
-    let sifMax = 1.5;
+    let sifMin = Infinity;
+    let sifMax = -Infinity;
 
+    let topColor, bottomColor;
     let barInfo = [];
 
-    p.preload = function() {
-    co2Table = loadTable("CO2_combined_median_2019-2025_cities.csv", "csv", "header");
-    sifTable = loadTable("SIF_combined_median_2019-2025_cities.csv", "csv", "header");
-    }
+    // ---------- preload ----------
+    p.preload = () => {
+        // ⚠ Make sure these paths are correct relative to the HTML file that loads this JS
+        co2Table = p.loadTable("../data/CO2_combined.csv", "csv", "header");
+        sifTable = p.loadTable("../data/SIF_combined.csv", "csv", "header");
+    };
 
-    p.setup = function() {
-    createCanvas(1400, 700);
-    textAlign(CENTER, CENTER);
+    // ---------- setup ----------
+    p.setup = () => {
+        const parent = document.getElementById("MovingBars");
+        const c = p.createCanvas(parent.clientWidth, 700);
+        c.parent(parent); // 🔑 attach canvas to div
 
-    topColor = color(255, 80, 80);
-    bottomColor = color(160, 0, 0);
+        p.textAlign(p.CENTER, p.CENTER);
 
-    let cityMonthCo2 = {};
-    let monthSet = new Set();
+        topColor = p.color(255, 80, 80);
+        bottomColor = p.color(160, 0, 0);
 
-    for (let r = 0; r < co2Table.getRowCount(); r++) {
-        let rawCity = co2Table.getString(r, "city");
-        if (!cities.includes(rawCity)) cities.push(rawCity);
-    }
+        let cityMonthCO2 = {};
+        let cityMonthSIF = {};
+        let monthSet = new Set();
 
-    for (let r = 0; r < co2Table.getRowCount(); r++) {
-        let city = co2Table.getString(r, "city");
-        let v = co2Table.getNum(r, "xco2");
-        if (!isFinite(v)) continue;
+        // ---------- CO2 ----------
+        for (let r = 0; r < co2Table.getRowCount(); r++) {
+            const city = co2Table.getString(r, "city");
+            const v = co2Table.getNum(r, "xco2");
+            if (!isFinite(v)) continue;
 
-        let datetime = co2Table.getString(r, "datetime");
-        let datePart = datetime.split(" ")[0];
-        let parts = datePart.split("/");
-        let m = int(parts[0]);
-        let yy = int(parts[2]);
-        let y = 2000 + yy;
-        let key = y + "-" + nf(m, 2);
+            if (!cities.includes(city)) cities.push(city);
 
-        monthSet.add(key);
+            const key = parseMonthKey(co2Table.getString(r, "datetime"));
+            monthSet.add(key);
 
-        if (!cityMonthCo2[city]) cityMonthCo2[city] = {};
-        if (!cityMonthCo2[city][key]) cityMonthCo2[city][key] = {sum:0, count:0};
-        cityMonthCo2[city][key].sum += v;
-        cityMonthCo2[city][key].count += 1;
-    }
-
-    monthKeys = Array.from(monthSet).sort();
-    for (let k of monthKeys) {
-        let parts = k.split("-");
-        let y = int(parts[0]);
-        let m = int(parts[1]);
-        months.push(`${monthName(m)} ${y}`);
-    }
-    
-    let cityMonthSIF = {};
-
-    for (let r = 0; r < sifTable.getRowCount(); r++) {
-        let city = sifTable.getString(r, "city");
-        let v = sifTable.getNum(r, "sif");
-        if (!isFinite(v)) continue;
-
-        let datetime = sifTable.getString(r, "datetime");
-        let datePart = datetime.split(" ")[0];
-        let parts = datePart.split("/");
-        let m = int(parts[0]);
-        let yy = int(parts[2]);
-        let y = 2000 + yy;
-        let key = y + "-" + nf(m, 2);
-
-        if (!cityMonthSIF[city]) cityMonthSIF[city] = {};
-        if (!cityMonthSIF[city][key]) cityMonthSIF[city][key] = {sum:0, count:0};
-
-        cityMonthSIF[city][key].sum += v;
-        cityMonthSIF[city][key].count += 1;
-    }
-
-
-    for (let city of cities) {
-        let raw = cityMonthSIF[city];
-        if (!raw) continue;
-
-        let arr = [];
-        let lastVal = null;
-
-        for (let i = 0; i < monthKeys.length; i++) {
-        let key = monthKeys[i];
-        let entry = raw[key];
-        let value = null;
-        if (entry) {
-            value = entry.sum / entry.count; // average SIF per month
-            lastVal = value;
-        } else if (lastVal !== null) {
-            value = lastVal;
-        }
-        arr[i] = value;
+            cityMonthCO2[city] ??= {};
+            cityMonthCO2[city][key] ??= { sum: 0, count: 0 };
+            cityMonthCO2[city][key].sum += v;
+            cityMonthCO2[city][key].count++;
         }
 
-        let firstIdx = -1;
-        for (let i = 0; i < arr.length; i++) {
-        if (arr[i] != null) {
-            firstIdx = i;
-            break;
-        }
-        }
-        if (firstIdx === -1) continue;
+        // ---------- SIF ----------
+        for (let r = 0; r < sifTable.getRowCount(); r++) {
+            const city = sifTable.getString(r, "city");
+            const v = sifTable.getNum(r, "Daily_SIF_757nm");
+            if (!isFinite(v)) continue;
 
-        let current = arr[firstIdx];
-        for (let i = 0; i < firstIdx; i++) arr[i] = current;
-        for (let i = firstIdx; i < arr.length; i++) {
-        if (arr[i] == null) arr[i] = current;
-        else current = arr[i];
-        }
+            const key = parseMonthKey(sifTable.getString(r, "datetime"));
+            monthSet.add(key);
 
-        sifSeries[city] = arr;
-
-        // update min/max for scale
-        for (let v of arr) {
-        if (!isFinite(v)) continue;
-        if (v < sifMin) sifMin = v;
-        if (v > sifMax) sifMax = v;
-        }
-    }
-
-
-    p.draw = function() {
-    background(245);
-
-    if (months.length === 0) {
-        fill(0);
-        textSize(24);
-        text("No data loaded", width/2, height/2);
-        return;
-    }
-
-    let t = millis() / 100;
-    currentMonthIndex = floor(t) % months.length;
-
-    fill(0);
-    textAlign(LEFT, TOP);
-    textSize(28);
-    text(months[currentMonthIndex], 60, 15);
-
-    let centerY = height * 0.45;
-    let maxUp = 120;
-    let maxDown = 100;
-
-    let leftMargin = 80;
-    let rightMargin = 40;
-    let usableWidth = width - leftMargin - rightMargin;
-
-    let spacing = usableWidth / max(cities.length, 1);
-    let barWidth = min(spacing * 0.7, 14);
-
-    drawCO2Scale(centerY, maxUp);
-    drawSIFScale(centerY, maxDown);
-
-    barInfo = [];
-
-    for (let i = 0; i < cities.length; i++) {
-        let city = cities[i];
-        let co2Arr = co2Series[city];
-        let sifArr = sifSeries[city];
-        if (!co2Arr && !sifArr) continue;
-
-        let x = leftMargin + spacing * i + spacing * 0.5;
-
-        let co2Val = co2Arr ? co2Arr[currentMonthIndex] : null;
-        let upH = 0;
-        if (co2Val != null) {
-        upH = map(co2Val, co2Min, co2Max, 5, maxUp);
-        fill(topColor);
-        rectMode(CORNER);
-        rect(x - barWidth/2, centerY - upH, barWidth, upH);
+            cityMonthSIF[city] ??= {};
+            cityMonthSIF[city][key] ??= { sum: 0, count: 0 };
+            cityMonthSIF[city][key].sum += v;
+            cityMonthSIF[city][key].count++;
         }
 
-        let sifVal = sifArr ? sifArr[currentMonthIndex] : null;
-        let downH = 0;
-        if (sifVal != null) {
-        downH = map(sifVal, sifMin, sifMax, 5, maxDown);
-        fill(bottomColor);
-        rectMode(CORNER);
-        rect(x - barWidth/2, centerY, barWidth, downH);
-        }
-
-        barInfo.push({
-        city,
-        x,
-        barWidth,
-        centerY,
-        upH,
-        downH,
-        co2Val,
-        sifVal
+        // ---------- build months array ----------
+        monthKeys = Array.from(monthSet).sort();
+        months = monthKeys.map(k => {
+            const [y, m] = k.split("-");
+            return `${monthName(+m)} ${y}`;
         });
-    }
 
-    stroke(0);
-    line(0, centerY, width, centerY);
+        // ---------- build aligned series ----------
+        for (const city of cities) {
+            co2Series[city] = buildSeries(cityMonthCO2[city]);
+            sifSeries[city] = buildSeries(cityMonthSIF[city]);
 
-    noStroke();
-    fill(0);
-    textAlign(LEFT, CENTER);
-    textSize(18);
-    text("CO₂ (ppm)", 60, centerY - maxUp - 40);
-    text("SIF", 60, centerY + maxDown + 40);
-
-    drawTooltip();
-    }
-
-    p.drawTooltip = function() {
-    let hovered = null;
-
-    for (let info of barInfo) {
-        let x1 = info.x - info.barWidth/2;
-        let x2 = info.x + info.barWidth/2;
-        let yTop = info.centerY - info.upH;
-        let yBottom = info.centerY + info.downH;
-
-        if (mouseX >= x1 && mouseX <= x2 && mouseY >= yTop && mouseY <= yBottom) {
-        hovered = info;
-        break;
+            for (const v of co2Series[city]) {
+                if (isFinite(v)) {
+                    co2Min = p.min(co2Min, v);
+                    co2Max = p.max(co2Max, v);
+                }
+            }
+            for (const v of sifSeries[city]) {
+                if (isFinite(v)) {
+                    sifMin = p.min(sifMin, v);
+                    sifMax = p.max(sifMax, v);
+                }
+            }
         }
+
+        // Fallbacks
+        if (!isFinite(co2Min)) { co2Min = 400; co2Max = 430; }
+        if (!isFinite(sifMin)) { sifMin = 0; sifMax = 1.5; }
+    };
+
+    // ---------- draw ----------
+    p.draw = () => {
+        p.background(245);
+        if (!months.length) return;
+
+        currentMonthIndex = Math.floor(p.millis() / 120) % months.length;
+
+        p.fill(0);
+        p.textAlign(p.LEFT, p.TOP);
+        p.textSize(26);
+        p.text(months[currentMonthIndex], 60, 15);
+
+        const centerY = p.height * 0.45;
+        const maxUp = 120;
+        const maxDown = 100;
+
+        const leftMargin = 80;
+        const usableWidth = p.width - leftMargin - 40;
+        const spacing = usableWidth / cities.length;
+        const barWidth = Math.min(spacing * 0.7, 14);
+
+        barInfo = [];
+
+        for (let i = 0; i < cities.length; i++) {
+            const city = cities[i];
+            const x = leftMargin + spacing * i + spacing / 2;
+
+            const co2Val = co2Series[city][currentMonthIndex];
+            const sifVal = sifSeries[city][currentMonthIndex];
+
+            if (isFinite(co2Val)) {
+                const h = p.map(co2Val, co2Min, co2Max, 5, maxUp);
+                p.fill(topColor);
+                p.rect(x - barWidth / 2, centerY - h, barWidth, h);
+            }
+
+            if (isFinite(sifVal)) {
+                const h = p.map(sifVal, sifMin, sifMax, 5, maxDown);
+                p.fill(bottomColor);
+                p.rect(x - barWidth / 2, centerY, barWidth, h);
+            }
+        }
+
+        p.stroke(0);
+        p.line(0, centerY, p.width, centerY);
+        p.noStroke();
+    };
+
+    // ---------- helpers ----------
+    function buildSeries(raw) {
+        let arr = [];
+        let last = null;
+        for (let k of monthKeys) {
+            const e = raw?.[k];
+            if (e) last = e.sum / e.count;
+            arr.push(last);
+        }
+        return arr;
     }
 
-    if (!hovered) return;
-
-    let tipText1 = hovered.city;
-    let tipText2 = hovered.co2Val != null ? `CO₂: ${nf(hovered.co2Val,1,1)} ppm` : "";
-    let tipText3 = hovered.sifVal != null ? `SIF: ${nf(hovered.sifVal,1,3)}` : "";
-
-    textSize(14);
-    let w1 = textWidth(tipText1);
-    let w2 = textWidth(tipText2);
-    let w3 = textWidth(tipText3);
-    let tw = max(w1, w2, w3) + 20;
-    let th = 50;
-
-    let tx = hovered.x;
-    let ty = hovered.centerY - hovered.upH - 25;
-    if (ty - th < 0) ty = hovered.centerY + hovered.downH + 25;
-    if (tx - tw/2 < 0) tx = tw/2 + 5;
-    if (tx + tw/2 > width) tx = width - tw/2 - 5;
-
-    rectMode(CENTER);
-    fill(255);
-    stroke(0);
-    rect(tx, ty, tw, th, 6);
-
-    noStroke();
-    fill(0);
-    textAlign(CENTER, CENTER);
-    let lineY = ty - 12;
-    text(tipText1, tx, lineY);
-    lineY += 14;
-    if (tipText2 !== "") text(tipText2, tx, lineY);
-    lineY += 14;
-    if (tipText3 !== "") text(tipText3, tx, lineY);
+    function parseMonthKey(datetime) {
+        const [m, , yy] = datetime.split(" ")[0].split("/");
+        return `${2000 + +yy}-${p.nf(+m, 2)}`;
     }
 
-    p.drawCO2Scale = function(centerY, maxUp) {
-    let axisX = 40;
-    stroke(0);
-    strokeWeight(1.2);
-    line(axisX, centerY, axisX, centerY - maxUp);
-
-    let ticks = 5;
-    textAlign(RIGHT, CENTER);
-    textSize(14);
-    fill(0);
-
-    for (let i = 1; i <= ticks; i++) {
-        let y = centerY - (i / ticks) * maxUp;
-        let value = lerp(co2Min, co2Max, i / ticks);
-        let label = nf(value, 1, 1);
-        noStroke();
-        text(label, axisX - 8, y);
-        stroke(0);
-        line(axisX - 4, y, axisX, y);
+    function monthName(m) {
+        return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][m - 1];
     }
-    }
-
-    p.drawSIFScale = function(centerY, maxDown) {
-    let axisX = 40;
-    stroke(0);
-    strokeWeight(1.2);
-    line(axisX, centerY, axisX, centerY + maxDown);
-
-    let ticks = 5;
-    textAlign(RIGHT, CENTER);
-    textSize(14);
-    fill(0);
-
-    for (let i = 0; i <= ticks; i++) {
-        let y = centerY + (i / ticks) * maxDown;
-        let value = lerp(sifMin, sifMax, i / ticks);
-        let label = nf(value, 1, 2);
-        noStroke();
-        text(label, axisX - 8, y);
-        stroke(0);
-        line(axisX - 4, y, axisX, y);
-    }
-    }
-
-    p.monthName = function(m) {
-    return ["Jan","Feb","Mar","Apr","May","Jun","Jul",
-            "Aug","Sep","Oct","Nov","Dec"][m-1];
-    }
-    }
-
 
 };
 
-new p5(MovingBars, 'MovingBars'); 
+new p5(MovingBars, 'MovingBars');

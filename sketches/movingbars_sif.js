@@ -13,12 +13,17 @@ const movingbars_sif = (p) => {
     let animationRunning = true;
 
     // Filters
-    let countryFilter = "All";
+    let countryFilter = new Set(); // multiple countries selected
     let minPop = 0;
     let maxPop = Infinity;
 
     let countryDropdown;
     let minPopSlider, maxPopSlider;
+    let minPopLabel, maxPopLabel;
+
+    // Sorting
+    let sortOrder = "original"; // "asc", "desc", "original"
+    let sortButtons = {};
 
     // Store city metadata
     let cityMeta = {}; // { cityName: {country, latitude?, population} }
@@ -110,16 +115,20 @@ const movingbars_sif = (p) => {
             sifSeries[city] = arr;
         }
 
-        // ---- UI: Country dropdown ----
-        const countries = Array.from(new Set(cities.map(c => cityMeta[c].country)));
+        // ---- UI: Multi-country selection ----
+        const countries = Array.from(new Set(cities.map(c => cityMeta[c].country))).sort();
         countryDropdown = p.createSelect();
         countryDropdown.parent(parent);
         countryDropdown.position(10, 10);
         countryDropdown.option("All");
         for (let c of countries) countryDropdown.option(c);
-        countryDropdown.changed(() => countryFilter = countryDropdown.value());
+        countryDropdown.changed(() => {
+            const val = countryDropdown.value();
+            if (val === "All") countryFilter = new Set();
+            else countryFilter = new Set([val]);
+        });
 
-        // ---- UI: Population sliders ----
+        // ---- Population sliders ----
         const popVals = cities.map(c => cityMeta[c].population);
         const popMin = Math.min(...popVals);
         const popMax = Math.max(...popVals);
@@ -127,12 +136,40 @@ const movingbars_sif = (p) => {
         minPopSlider = p.createSlider(popMin, popMax, popMin);
         minPopSlider.parent(parent);
         minPopSlider.position(10, 40);
-        minPopSlider.input(() => minPop = minPopSlider.value());
+        minPopLabel = p.createDiv(`Min population: ${minPopSlider.value()}`);
+        minPopLabel.parent(parent);
+        minPopLabel.position(160, 40);
+        minPopSlider.input(() => {
+            minPop = minPopSlider.value();
+            minPopLabel.html(`Min population: ${minPop}`);
+        });
 
         maxPopSlider = p.createSlider(popMin, popMax, popMax);
         maxPopSlider.parent(parent);
         maxPopSlider.position(10, 70);
-        maxPopSlider.input(() => maxPop = maxPopSlider.value());
+        maxPopLabel = p.createDiv(`Max population: ${maxPopSlider.value()}`);
+        maxPopLabel.parent(parent);
+        maxPopLabel.position(160, 70);
+        maxPopSlider.input(() => {
+            maxPop = maxPopSlider.value();
+            maxPopLabel.html(`Max population: ${maxPop}`);
+        });
+
+        // ---- Sorting buttons ----
+        sortButtons.asc = p.createButton("Sort Asc");
+        sortButtons.asc.parent(parent);
+        sortButtons.asc.position(10, 100);
+        sortButtons.asc.mousePressed(() => sortOrder = "asc");
+
+        sortButtons.desc = p.createButton("Sort Desc");
+        sortButtons.desc.parent(parent);
+        sortButtons.desc.position(100, 100);
+        sortButtons.desc.mousePressed(() => sortOrder = "desc");
+
+        sortButtons.original = p.createButton("Original Order");
+        sortButtons.original.parent(parent);
+        sortButtons.original.position(200, 100);
+        sortButtons.original.mousePressed(() => sortOrder = "original");
 
         p.noStroke();
     };
@@ -161,27 +198,31 @@ const movingbars_sif = (p) => {
         const maxDown = 300;
         const leftMargin = 80;
         const rightMargin = 40;
-        const usableWidth = p.width - leftMargin - rightMargin;
-        const spacing = usableWidth / Math.max(cities.length, 1);
+
+        let displayCities = cities.filter(city => {
+            const meta = cityMeta[city];
+            if (countryFilter.size && !countryFilter.has(meta.country)) return false;
+            if (meta.population < minPop || meta.population > maxPop) return false;
+            return true;
+        });
+
+        // Sorting
+        if (sortOrder === "asc") displayCities.sort((a, b) => sifSeries[a][currentMonthIndex] - sifSeries[b][currentMonthIndex]);
+        else if (sortOrder === "desc") displayCities.sort((a, b) => sifSeries[b][currentMonthIndex] - sifSeries[a][currentMonthIndex]);
+
+        const spacing = (p.width - leftMargin - rightMargin) / Math.max(displayCities.length, 1);
         const barWidth = Math.min(spacing * 0.7, 14);
 
         barInfo = [];
 
-        for (let i = 0; i < cities.length; i++) {
-            const city = cities[i];
+        for (let i = 0; i < displayCities.length; i++) {
+            const city = displayCities[i];
             const sifArr = sifSeries[city];
-            if (!sifArr) continue;
-
-            // Filters
             const meta = cityMeta[city];
-            if ((countryFilter !== "All" && meta.country !== countryFilter) ||
-                meta.population < minPop || meta.population > maxPop) continue;
-
             const x = leftMargin + spacing * i + spacing * 0.5;
             const sifVal = sifArr[currentMonthIndex];
             const downH = p.map(sifVal, sifMin, sifMax, 5, maxDown);
 
-            // Season coloring by hemisphere
             const dateParts = monthKeys[currentMonthIndex].split("-");
             const month = parseInt(dateParts[1]) - 1;
             let season = month <= 1 || month === 11 ? "Winter" :
@@ -201,6 +242,7 @@ const movingbars_sif = (p) => {
         p.noStroke();
 
         drawTooltip(p);
+        drawSeasonLegend(p);
     };
 
     function drawTooltip(p) {
@@ -248,6 +290,20 @@ const movingbars_sif = (p) => {
         p.text(tipText2, tx, lineY);
         lineY += 16;
         if (tipText3 !== "") p.text(tipText3, tx, lineY);
+    }
+
+    function drawSeasonLegend(p) {
+        const seasons = ["Winter", "Spring", "Summer", "Fall"];
+        const startX = p.width - 180;
+        const startY = 20;
+        p.textSize(14);
+        p.textAlign(p.LEFT, p.CENTER);
+        seasons.forEach((s, i) => {
+            p.fill(seasonColorsNH[s]);
+            p.rect(startX, startY + i * 20, 12, 12);
+            p.fill(255);
+            p.text(s, startX + 20, startY + i * 20 + 6);
+        });
     }
 
     p.mousePressed = () => {

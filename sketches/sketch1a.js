@@ -63,7 +63,7 @@ function setup() {
     monthSet.add(key);
 
     if (!cityMonthCo2[city]) cityMonthCo2[city] = {};
-    if (!cityMonthCo2[city][key]) cityMonthCo2[city][key] = {sum:0, count:0};
+    if (!cityMonthCo2[city][key]) cityMonthCo2[city][key] = { sum: 0, count: 0 };
     cityMonthCo2[city][key].sum += v;
     cityMonthCo2[city][key].count += 1;
   }
@@ -144,7 +144,7 @@ function draw() {
   if (months.length === 0) {
     fill(0);
     textSize(24);
-    text("No data loaded", width/2, height/2);
+    text("No data loaded", width / 2, height / 2);
     return;
   }
 
@@ -186,7 +186,7 @@ function draw() {
       upH = map(co2Val, co2Min, co2Max, 5, maxUp);
       fill(topColor);
       rectMode(CORNER);
-      rect(x - barWidth/2, centerY - upH, barWidth, upH);
+      rect(x - barWidth / 2, centerY - upH, barWidth, upH);
     }
 
     let sifVal = sifArr ? sifArr[currentMonthIndex] : null;
@@ -195,7 +195,7 @@ function draw() {
       downH = map(sifVal, sifMin, sifMax, 5, maxDown);
       fill(bottomColor);
       rectMode(CORNER);
-      rect(x - barWidth/2, centerY, barWidth, downH);
+      rect(x - barWidth / 2, centerY, barWidth, downH);
     }
 
     barInfo.push({
@@ -227,8 +227,8 @@ function drawTooltip() {
   let hovered = null;
 
   for (let info of barInfo) {
-    let x1 = info.x - info.barWidth/2;
-    let x2 = info.x + info.barWidth/2;
+    let x1 = info.x - info.barWidth / 2;
+    let x2 = info.x + info.barWidth / 2;
     let yTop = info.centerY - info.upH;
     let yBottom = info.centerY + info.downH;
 
@@ -241,8 +241,8 @@ function drawTooltip() {
   if (!hovered) return;
 
   let tipText1 = hovered.city;
-  let tipText2 = hovered.co2Val != null ? `CO₂: ${nf(hovered.co2Val,1,1)} ppm` : "";
-  let tipText3 = hovered.sifVal != null ? `SIF: ${nf(hovered.sifVal,1,3)}` : "";
+  let tipText2 = hovered.co2Val != null ? `CO₂: ${nf(hovered.co2Val, 1, 1)} ppm` : "";
+  let tipText3 = hovered.sifVal != null ? `SIF: ${nf(hovered.sifVal, 1, 3)}` : "";
 
   textSize(14);
   let w1 = textWidth(tipText1);
@@ -254,8 +254,8 @@ function drawTooltip() {
   let tx = hovered.x;
   let ty = hovered.centerY - hovered.upH - 25;
   if (ty - th < 0) ty = hovered.centerY + hovered.downH + 25;
-  if (tx - tw/2 < 0) tx = tw/2 + 5;
-  if (tx + tw/2 > width) tx = width - tw/2 - 5;
+  if (tx - tw / 2 < 0) tx = tw / 2 + 5;
+  if (tx + tw / 2 > width) tx = width - tw / 2 - 5;
 
   rectMode(CENTER);
   fill(255);
@@ -318,8 +318,8 @@ function drawSIFScale(centerY, maxDown) {
 }
 
 function monthName(m) {
-  return ["Jan","Feb","Mar","Apr","May","Jun","Jul",
-          "Aug","Sep","Oct","Nov","Dec"][m-1];
+  return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
+    "Aug", "Sep", "Oct", "Nov", "Dec"][m - 1];
 }
 
 // After

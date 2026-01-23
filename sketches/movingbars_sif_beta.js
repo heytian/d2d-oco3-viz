@@ -12,16 +12,18 @@ const movingbars_sif = (p) => {
     let barInfo = [];
     let animationRunning = true;
 
-    // Filters
-    let countryFilter = "All";
+    let countryFilter = new Set();
     let minPop = 0;
-    let maxPop = Infinity;
+    let seasonFilter = { Winter: true, Spring: true, Summer: true, Fall: true };
 
-    let countryDropdown;
-    let minPopSlider, maxPopSlider;
+    let countryMultiselect;
+    let minPopSlider, minPopLabel;
+    let seasonCheckboxes = {};
 
-    // Store city metadata
-    let cityMeta = {}; // { cityName: {country, latitude?, population} }
+    let sortOrder = "original";
+    let sortButtons = {};
+
+    let cityMeta = {};
 
     const seasonColorsNH = { Winter: [0, 150, 255], Spring: [0, 255, 0], Summer: [255, 165, 0], Fall: [255, 0, 0] };
     const seasonColorsSH = { Winter: [255, 165, 0], Spring: [255, 0, 0], Summer: [0, 150, 255], Fall: [0, 255, 0] };
@@ -34,10 +36,8 @@ const movingbars_sif = (p) => {
         const parent = document.getElementById("movingbars_sif");
         const c = p.createCanvas(parent.clientWidth, parent.clientHeight);
         c.parent(parent);
-
         p.textAlign(p.CENTER, p.CENTER);
 
-        // Build cities, series, and metadata
         let cityMonthSIF = {};
         let monthSet = new Set();
 
@@ -45,6 +45,12 @@ const movingbars_sif = (p) => {
             const city = table.getString(r, "city");
             const country = table.getString(r, "country");
             if (!city || !country) continue;
+
+            const v = table.getNum(r, "Daily_SIF_");
+            if (!isFinite(v) || v < 0) continue;
+
+            const datetime = table.getString(r, "datetime");
+            if (!datetime) continue;
 
             if (!cities.includes(city)) {
                 cities.push(city);
@@ -54,12 +60,6 @@ const movingbars_sif = (p) => {
                     population: table.getNum(r, "j_POP_MAX") || 0
                 };
             }
-
-            const v = table.getNum(r, "Daily_SIF_");
-            if (!isFinite(v)) continue;
-
-            const datetime = table.getString(r, "datetime");
-            if (!datetime) continue;
 
             const date = new Date(datetime);
             const key = `${date.getFullYear()}-${p.nf(date.getMonth() + 1, 2)}-${p.nf(date.getDate(), 2)}`;
@@ -74,7 +74,7 @@ const movingbars_sif = (p) => {
         monthKeys = Array.from(monthSet).sort();
         for (let k of monthKeys) {
             const parts = k.split("-");
-            months.push(`${parts[2]} ${monthName(parseInt(parts[1]))} ${parts[0]}`); // day month year
+            months.push(`${parts[2]} ${monthName(parseInt(parts[1]))} ${parts[0]}`);
         }
 
         for (let city of cities) {
@@ -110,29 +110,60 @@ const movingbars_sif = (p) => {
             sifSeries[city] = arr;
         }
 
-        // ---- UI: Country dropdown ----
-        const countries = Array.from(new Set(cities.map(c => cityMeta[c].country)));
-        countryDropdown = p.createSelect();
-        countryDropdown.parent(parent);
-        countryDropdown.position(10, 10);
-        countryDropdown.option("All");
-        for (let c of countries) countryDropdown.option(c);
-        countryDropdown.changed(() => countryFilter = countryDropdown.value());
 
-        // ---- UI: Population sliders ----
+        const countries = Array.from(new Set(cities.map(c => cityMeta[c].country))).sort();
+        countryMultiselect = p.createSelect();
+        countryMultiselect.parent(parent);
+        countryMultiselect.position(p.width - 410, 40);
+        countryMultiselect.option("All");
+        countryMultiselect.attribute("multiple", true);
+        countries.forEach(c => countryMultiselect.option(c));
+        countryMultiselect.changed(() => {
+            const selected = Array.from(countryMultiselect.selected());
+            if (selected.length === 0 || selected.includes("All")) countryFilter = new Set();
+            else countryFilter = new Set(selected);
+        });
+
         const popVals = cities.map(c => cityMeta[c].population);
-        const popMin = Math.min(...popVals);
-        const popMax = Math.max(...popVals);
+        const popMinVal = Math.min(...popVals);
+        const popMaxVal = Math.max(...popVals);
 
-        minPopSlider = p.createSlider(popMin, popMax, popMin);
+        minPopSlider = p.createSlider(popMinVal, popMaxVal, popMinVal);
         minPopSlider.parent(parent);
-        minPopSlider.position(10, 40);
-        minPopSlider.input(() => minPop = minPopSlider.value());
+        minPopSlider.position(p.width - 350, 120);
+        minPopLabel = p.createDiv(`Population >= ${minPopSlider.value()}`);
+        minPopLabel.parent(parent);
+        minPopLabel.position(p.width - 340, 145);
+        minPopLabel.style('color', 'white');
+        minPopSlider.input(() => {
+            minPop = minPopSlider.value();
+            minPopLabel.html(`Population >= ${minPop}`);
+        });
 
-        maxPopSlider = p.createSlider(popMin, popMax, popMax);
-        maxPopSlider.parent(parent);
-        maxPopSlider.position(10, 70);
-        maxPopSlider.input(() => maxPop = maxPopSlider.value());
+        // const seasonNames = ["Winter", "Spring", "Summer", "Fall"];
+        // seasonNames.forEach((s, i) => {
+        //     const cb = p.createCheckbox(s, true);
+        //     cb.parent(parent);
+        //     cb.position(30 + i * 90, 100);
+        //     cb.changed(() => { seasonFilter[s] = cb.checked(); });
+        //     cb.style('color', 'white');
+        //     seasonCheckboxes[s] = cb;
+        // });
+
+        sortButtons.asc = p.createButton("Sort Asc");
+        sortButtons.asc.parent(parent);
+        sortButtons.asc.position(30, 130);
+        sortButtons.asc.mousePressed(() => sortOrder = "asc");
+
+        sortButtons.desc = p.createButton("Sort Desc");
+        sortButtons.desc.parent(parent);
+        sortButtons.desc.position(100, 130);
+        sortButtons.desc.mousePressed(() => sortOrder = "desc");
+
+        sortButtons.original = p.createButton("Original Order");
+        sortButtons.original.parent(parent);
+        sortButtons.original.position(200, 130);
+        sortButtons.original.mousePressed(() => sortOrder = "original");
 
         p.noStroke();
     };
@@ -148,7 +179,7 @@ const movingbars_sif = (p) => {
         }
 
         if (animationRunning) {
-            const t = p.millis() / 10; // speed
+            const t = p.millis() / 10;
             currentMonthIndex = Math.floor(t) % months.length;
         }
 
@@ -161,39 +192,45 @@ const movingbars_sif = (p) => {
         const maxDown = 300;
         const leftMargin = 80;
         const rightMargin = 40;
-        const usableWidth = p.width - leftMargin - rightMargin;
-        const spacing = usableWidth / Math.max(cities.length, 1);
+
+        let displayCities = cities.filter(city => {
+            const meta = cityMeta[city];
+            if (countryFilter.size && !countryFilter.has(meta.country)) return false;
+            if (meta.population < minPop) return false;
+            return true;
+        });
+
+        if (sortOrder === "asc") displayCities.sort((a, b) => sifSeries[a][currentMonthIndex] - sifSeries[b][currentMonthIndex]);
+        else if (sortOrder === "desc") displayCities.sort((a, b) => sifSeries[b][currentMonthIndex] - sifSeries[a][currentMonthIndex]);
+
+        const spacing = (p.width - leftMargin - rightMargin) / Math.max(displayCities.length, 1);
         const barWidth = Math.min(spacing * 0.7, 14);
 
         barInfo = [];
 
-        for (let i = 0; i < cities.length; i++) {
-            const city = cities[i];
+        for (let i = 0; i < displayCities.length; i++) {
+            const city = displayCities[i];
             const sifArr = sifSeries[city];
-            if (!sifArr) continue;
-
-            // Filters
             const meta = cityMeta[city];
-            if ((countryFilter !== "All" && meta.country !== countryFilter) ||
-                meta.population < minPop || meta.population > maxPop) continue;
-
             const x = leftMargin + spacing * i + spacing * 0.5;
             const sifVal = sifArr[currentMonthIndex];
             const downH = p.map(sifVal, sifMin, sifMax, 5, maxDown);
 
-            // Season coloring by hemisphere
             const dateParts = monthKeys[currentMonthIndex].split("-");
             const month = parseInt(dateParts[1]) - 1;
             let season = month <= 1 || month === 11 ? "Winter" :
                 month <= 4 ? "Spring" :
                     month <= 7 ? "Summer" : "Fall";
+
+            if (!seasonFilter[season]) continue;
+
             const colorArr = meta.latitude >= 0 ? seasonColorsNH[season] : seasonColorsSH[season];
 
             p.fill(colorArr);
             p.rectMode(p.CORNER);
             p.rect(x - barWidth / 2, centerY, barWidth, downH);
 
-            barInfo.push({ city, x, barWidth, centerY, downH, sifVal });
+            barInfo.push({ city, x, barWidth, centerY, downH, sifVal, season });
         }
 
         p.stroke(255);
@@ -201,6 +238,7 @@ const movingbars_sif = (p) => {
         p.noStroke();
 
         drawTooltip(p);
+        drawSeasonLegend(p);
     };
 
     function drawTooltip(p) {
@@ -210,7 +248,6 @@ const movingbars_sif = (p) => {
             const x2 = info.x + info.barWidth / 2;
             const yTop = info.centerY;
             const yBottom = info.centerY + info.downH;
-
             if (p.mouseX >= x1 && p.mouseX <= x2 && p.mouseY >= yTop && p.mouseY <= yBottom) {
                 hovered = info;
                 break;
@@ -248,6 +285,20 @@ const movingbars_sif = (p) => {
         p.text(tipText2, tx, lineY);
         lineY += 16;
         if (tipText3 !== "") p.text(tipText3, tx, lineY);
+    }
+
+    function drawSeasonLegend(p) {
+        const seasons = ["Winter", "Spring", "Summer", "Fall"];
+        const startX = p.width - 180;
+        const startY = 20;
+        p.textSize(14);
+        p.textAlign(p.LEFT, p.CENTER);
+        seasons.forEach((s, i) => {
+            p.fill(seasonColorsNH[s]);
+            p.rect(startX, startY + i * 20, 12, 12);
+            p.fill(255);
+            p.text(s, startX + 20, startY + i * 20 + 6);
+        });
     }
 
     p.mousePressed = () => {

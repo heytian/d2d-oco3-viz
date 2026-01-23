@@ -12,21 +12,18 @@ const movingbars_sif = (p) => {
     let barInfo = [];
     let animationRunning = true;
 
-    // Filters
-    let countryFilter = new Set(); // multiple countries selected
+    let countryFilter = new Set();
     let minPop = 0;
-    let maxPop = Infinity;
+    let seasonFilter = { Winter: true, Spring: true, Summer: true, Fall: true };
 
-    let countryDropdown;
-    let minPopSlider, maxPopSlider;
-    let minPopLabel, maxPopLabel;
+    let countryMultiselect;
+    let minPopSlider, minPopLabel;
+    let seasonCheckboxes = {};
 
-    // Sorting
-    let sortOrder = "original"; // "asc", "desc", "original"
+    let sortOrder = "original";
     let sortButtons = {};
 
-    // Store city metadata
-    let cityMeta = {}; // { cityName: {country, latitude?, population} }
+    let cityMeta = {};
 
     const seasonColorsNH = { Winter: [0, 150, 255], Spring: [0, 255, 0], Summer: [255, 165, 0], Fall: [255, 0, 0] };
     const seasonColorsSH = { Winter: [255, 165, 0], Spring: [255, 0, 0], Summer: [0, 150, 255], Fall: [0, 255, 0] };
@@ -39,10 +36,8 @@ const movingbars_sif = (p) => {
         const parent = document.getElementById("movingbars_sif");
         const c = p.createCanvas(parent.clientWidth, parent.clientHeight);
         c.parent(parent);
-
         p.textAlign(p.CENTER, p.CENTER);
 
-        // Build cities, series, and metadata
         let cityMonthSIF = {};
         let monthSet = new Set();
 
@@ -50,6 +45,12 @@ const movingbars_sif = (p) => {
             const city = table.getString(r, "city");
             const country = table.getString(r, "country");
             if (!city || !country) continue;
+
+            const v = table.getNum(r, "Daily_SIF_");
+            if (!isFinite(v) || v < 0) continue;
+
+            const datetime = table.getString(r, "datetime");
+            if (!datetime) continue;
 
             if (!cities.includes(city)) {
                 cities.push(city);
@@ -59,12 +60,6 @@ const movingbars_sif = (p) => {
                     population: table.getNum(r, "j_POP_MAX") || 0
                 };
             }
-
-            const v = table.getNum(r, "Daily_SIF_");
-            if (!isFinite(v)) continue;
-
-            const datetime = table.getString(r, "datetime");
-            if (!datetime) continue;
 
             const date = new Date(datetime);
             const key = `${date.getFullYear()}-${p.nf(date.getMonth() + 1, 2)}-${p.nf(date.getDate(), 2)}`;
@@ -79,7 +74,7 @@ const movingbars_sif = (p) => {
         monthKeys = Array.from(monthSet).sort();
         for (let k of monthKeys) {
             const parts = k.split("-");
-            months.push(`${parts[2]} ${monthName(parseInt(parts[1]))} ${parts[0]}`); // day month year
+            months.push(`${parts[2]} ${monthName(parseInt(parts[1]))} ${parts[0]}`);
         }
 
         for (let city of cities) {
@@ -115,60 +110,59 @@ const movingbars_sif = (p) => {
             sifSeries[city] = arr;
         }
 
-        // ---- UI: Multi-country selection ----
+
         const countries = Array.from(new Set(cities.map(c => cityMeta[c].country))).sort();
-        countryDropdown = p.createSelect();
-        countryDropdown.parent(parent);
-        countryDropdown.position(10, 10);
-        countryDropdown.option("All");
-        for (let c of countries) countryDropdown.option(c);
-        countryDropdown.changed(() => {
-            const val = countryDropdown.value();
-            if (val === "All") countryFilter = new Set();
-            else countryFilter = new Set([val]);
+        countryMultiselect = p.createSelect();
+        countryMultiselect.parent(parent);
+        countryMultiselect.position(p.width - 410, 40);
+        countryMultiselect.option("All");
+        countryMultiselect.attribute("multiple", true);
+        countries.forEach(c => countryMultiselect.option(c));
+        countryMultiselect.changed(() => {
+            const selected = Array.from(countryMultiselect.selected());
+            if (selected.length === 0 || selected.includes("All")) countryFilter = new Set();
+            else countryFilter = new Set(selected);
         });
 
-        // ---- Population sliders ----
         const popVals = cities.map(c => cityMeta[c].population);
-        const popMin = Math.min(...popVals);
-        const popMax = Math.max(...popVals);
+        const popMinVal = Math.min(...popVals);
+        const popMaxVal = Math.max(...popVals);
 
-        minPopSlider = p.createSlider(popMin, popMax, popMin);
+        minPopSlider = p.createSlider(popMinVal, popMaxVal, popMinVal);
         minPopSlider.parent(parent);
-        minPopSlider.position(10, 40);
-        minPopLabel = p.createDiv(`Min population: ${minPopSlider.value()}`);
+        minPopSlider.position(p.width - 350, 120);
+        minPopLabel = p.createDiv(`Population >= ${minPopSlider.value()}`);
         minPopLabel.parent(parent);
-        minPopLabel.position(160, 40);
+        minPopLabel.position(p.width - 340, 145);
+        minPopLabel.style('color', 'white');
         minPopSlider.input(() => {
             minPop = minPopSlider.value();
-            minPopLabel.html(`Min population: ${minPop}`);
+            minPopLabel.html(`Population >= ${minPop}`);
         });
 
-        maxPopSlider = p.createSlider(popMin, popMax, popMax);
-        maxPopSlider.parent(parent);
-        maxPopSlider.position(10, 70);
-        maxPopLabel = p.createDiv(`Max population: ${maxPopSlider.value()}`);
-        maxPopLabel.parent(parent);
-        maxPopLabel.position(160, 70);
-        maxPopSlider.input(() => {
-            maxPop = maxPopSlider.value();
-            maxPopLabel.html(`Max population: ${maxPop}`);
-        });
+        // const seasonNames = ["Winter", "Spring", "Summer", "Fall"];
+        // seasonNames.forEach((s, i) => {
+        //     const cb = p.createCheckbox(s, true);
+        //     cb.parent(parent);
+        //     cb.position(30 + i * 90, 100);
+        //     cb.changed(() => { seasonFilter[s] = cb.checked(); });
+        //     cb.style('color', 'white');
+        //     seasonCheckboxes[s] = cb;
+        // });
 
-        // ---- Sorting buttons ----
         sortButtons.asc = p.createButton("Sort Asc");
         sortButtons.asc.parent(parent);
-        sortButtons.asc.position(10, 100);
+        sortButtons.asc.position(30, 130);
         sortButtons.asc.mousePressed(() => sortOrder = "asc");
 
         sortButtons.desc = p.createButton("Sort Desc");
         sortButtons.desc.parent(parent);
-        sortButtons.desc.position(100, 100);
+        sortButtons.desc.position(100, 130);
         sortButtons.desc.mousePressed(() => sortOrder = "desc");
 
         sortButtons.original = p.createButton("Original Order");
         sortButtons.original.parent(parent);
-        sortButtons.original.position(200, 100);
+        sortButtons.original.position(200, 130);
         sortButtons.original.mousePressed(() => sortOrder = "original");
 
         p.noStroke();
@@ -185,7 +179,7 @@ const movingbars_sif = (p) => {
         }
 
         if (animationRunning) {
-            const t = p.millis() / 10; // speed
+            const t = p.millis() / 10;
             currentMonthIndex = Math.floor(t) % months.length;
         }
 
@@ -202,11 +196,10 @@ const movingbars_sif = (p) => {
         let displayCities = cities.filter(city => {
             const meta = cityMeta[city];
             if (countryFilter.size && !countryFilter.has(meta.country)) return false;
-            if (meta.population < minPop || meta.population > maxPop) return false;
+            if (meta.population < minPop) return false;
             return true;
         });
 
-        // Sorting
         if (sortOrder === "asc") displayCities.sort((a, b) => sifSeries[a][currentMonthIndex] - sifSeries[b][currentMonthIndex]);
         else if (sortOrder === "desc") displayCities.sort((a, b) => sifSeries[b][currentMonthIndex] - sifSeries[a][currentMonthIndex]);
 
@@ -228,13 +221,16 @@ const movingbars_sif = (p) => {
             let season = month <= 1 || month === 11 ? "Winter" :
                 month <= 4 ? "Spring" :
                     month <= 7 ? "Summer" : "Fall";
+
+            if (!seasonFilter[season]) continue;
+
             const colorArr = meta.latitude >= 0 ? seasonColorsNH[season] : seasonColorsSH[season];
 
             p.fill(colorArr);
             p.rectMode(p.CORNER);
             p.rect(x - barWidth / 2, centerY, barWidth, downH);
 
-            barInfo.push({ city, x, barWidth, centerY, downH, sifVal });
+            barInfo.push({ city, x, barWidth, centerY, downH, sifVal, season });
         }
 
         p.stroke(255);
@@ -252,7 +248,6 @@ const movingbars_sif = (p) => {
             const x2 = info.x + info.barWidth / 2;
             const yTop = info.centerY;
             const yBottom = info.centerY + info.downH;
-
             if (p.mouseX >= x1 && p.mouseX <= x2 && p.mouseY >= yTop && p.mouseY <= yBottom) {
                 hovered = info;
                 break;

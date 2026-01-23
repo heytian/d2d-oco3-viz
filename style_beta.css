@@ -1,0 +1,51 @@
+/* Make the whole page black */
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #000;
+  color: white;
+  /* makes text readable */
+}
+
+/* Flex container for sketches */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  /* center sketches horizontally */
+}
+
+/* Base sketch container styling */
+.sketch-container,
+.sketch-container2,
+.sketch-container3 {
+  padding: 10px;
+  background-color: #111;
+  /* dark gray to contrast with black page */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border-radius: 8px;
+  flex-grow: 1;
+  /* allows containers to grow relative to each other */
+}
+
+/* Specific sizing */
+.sketch-container2 {
+  flex: 2 1 60%;
+  /* grow 2x relative to others, basis 60% of row */
+  min-width: 400px;
+  /* minimum width so it doesn’t shrink too much */
+  height: 500px;
+}
+
+.sketch-container,
+.sketch-container3 {
+  flex: 1 1 30%;
+  /* grow 1x relative to others, basis 30% of row */
+  min-width: 200px;
+  height: 300px;
+}

@@ -1,3 +1,5 @@
+// WIP. To change from countries to city next. dd Jan 29 1455h
+
 const movingbars_sif = (p) => {
     let table;
     let cities = [];

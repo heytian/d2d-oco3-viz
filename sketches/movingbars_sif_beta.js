@@ -29,7 +29,7 @@ const movingbars_sif = (p) => {
     const seasonColorsSH = { Winter: [255, 165, 0], Spring: [255, 0, 0], Summer: [0, 150, 255], Fall: [0, 255, 0] };
 
     p.preload = () => {
-        table = p.loadTable("../data/SIF_disagg_geocode_2019-2025.csv", "csv", "header");
+        table = p.loadTable("../data/SIF_olympic.csv", "csv", "header");
     };
 
     p.setup = () => {

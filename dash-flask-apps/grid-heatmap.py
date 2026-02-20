@@ -52,7 +52,6 @@ def assign_season(row):
             return "Autumn (North)"
 
     if -60 <= lat < -20:
-        # FLIPPED seasons
         if month in [12, 1, 2]:
             return "Summer (South)"
         elif month in [3, 4, 5]:
@@ -66,66 +65,71 @@ def assign_season(row):
 
 df["season"] = df.apply(assign_season, axis=1)
 
+def simple_marks(min_val, max_val):
+    mid = (min_val + max_val)//2
+    return {min_val: str(min_val), mid: str(mid), max_val: str(max_val)}
 
-app = dash.Dash(__name__)
+app = dash.Dash(
+    __name__,
+    external_stylesheets=["./dash-flask-apps/assets/style.css"]
+)
 
 app.layout = html.Div([
-    html.H1("OCO-3 CO2"),
+
+    dcc.Graph(id='heatmap'),
+
+    # html.H1("OCO-3 CO2",style={"font-family":"Arial", "font-size":"16px", "color":"black"}),
 
     html.Div([
-        html.Label("Time Range (Years)"),
+        html.Label("Time Range (Years)", style={"margin-right":"10px", "width":"150px"}),
         dcc.RangeSlider(
             id='year-slider',
             min=int(df["year"].min()),
             max=int(df["year"].max()),
             value=[int(df["year"].min()), int(df["year"].max())],
-            marks={int(y): str(int(y)) for y in sorted(df["year"].unique())},
-            step=1
+            marks=simple_marks(int(df["year"].min()), int(df["year"].max())),
+            step=0.05,
+            tooltip={"placement":"bottom", "always_visible":False},
+            allowCross=False
         )
-    ], style={'width': '80%', 'margin': '20px'}),
+    ], style={"display":"flex", "align-items":"center", "margin":"10px"}),
 
     html.Div([
-        html.Label("Population Range"),
+        html.Label("Population Range", style={"margin-right":"10px", "width":"150px"}),
         dcc.RangeSlider(
-            id="population-slider",
+            id='population-slider',
             min=int(df["population"].min()),
             max=int(df["population"].max()),
-            value=[
-                int(df["population"].min()),
-                int(df["population"].max())
-            ],
+            value=[int(df["population"].min()), int(df["population"].max())],
+            marks=simple_marks(int(df["population"].min()), int(df["population"].max())),
             step=100000,
-            tooltip={"placement": "bottom"}
-        ),
+            tooltip={"placement":"bottom", "always_visible":False},
+            allowCross=False
+        )
+    ], style={"display":"flex", "align-items":"center", "margin":"10px"}),
 
-        html.Br(),
-
-        html.Label("Time of Day"),
+    html.Div([
+        html.Label("Time of Day", style={"margin-right":"10px", "width":"150px"}),
         dcc.Dropdown(
             id="time-dropdown",
-            options=[
-                {"label": t, "value": t}
-                for t in sorted(df["time_of_day"].dropna().unique())
-            ],
+            options=[{"label": t, "value": t} for t in sorted(df["time_of_day"].dropna().unique())],
             value=list(df["time_of_day"].dropna().unique()),
-            multi=True
-        ),
+            multi=True,
+            style={"width":"450px"}
+        )
+    ], style={"display":"flex", "align-items":"center", "margin":"10px"}),
 
-        html.Br(),
-
-        html.Label("Season"),
+    html.Div([
+        html.Label("Season", style={"margin-right":"10px", "width":"150px"}),
         dcc.Dropdown(
             id="season-dropdown",
-            options=[
-                {"label": s, "value": s}
-                for s in sorted(df["season"].dropna().unique())
-            ],
+            options=[{"label": s, "value": s} for s in sorted(df["season"].dropna().unique())],
             value=list(df["season"].dropna().unique()),
-            multi=True
+            multi=True,
+            style={"width":"1100px"}
         )
-    ], style={"width":"40%", "margin":"20px"}),
+    ], style={"display":"flex", "align-items":"center", "margin":"10px"})
 
-    dcc.Graph(id='heatmap')
 ])
 
 
@@ -188,7 +192,7 @@ def update_heatmap(year_range, population_range, selected_times, selected_season
             color='black',
             size=14),
         paper_bgcolor="white",
-        plot_bgcolor="#f5f5f5",
+        plot_bgcolor="#ffffff",
         height=600
     )
 

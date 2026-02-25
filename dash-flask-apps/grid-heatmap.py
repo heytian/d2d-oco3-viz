@@ -192,7 +192,7 @@ def update_heatmap(year_range, population_range, selected_times, selected_season
             color='black',
             size=14),
         paper_bgcolor="white",
-        plot_bgcolor="#ffffff",
+        plot_bgcolor="#FFFFFF",
         height=600
     )
 

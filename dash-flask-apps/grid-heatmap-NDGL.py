@@ -4,7 +4,7 @@ import dash
 from dash import dcc, html, Input, Output
 import plotly.express as px
 
-df = pd.read_csv("./data/Olympic_Cities_Updated_pop.csv")
+df = pd.read_csv("./data/CO2_NDGL_population_city.csv")
 
 df["datetime"] = pd.to_datetime(
     df["datetime"],
@@ -179,7 +179,7 @@ def update_heatmap(year_range, population_range, selected_times, selected_season
 
     fig.update_layout(
         template="plotly_white",
-        title="Atmospheric CO2 Levels of Olympic Host Cities",
+        title="Atmospheric CO2 Levels (Nadir +)",
         title_font=dict(family="Arial", size=18, color="black"),
         xaxis=dict(title_font=dict(family="Arial", size=16, color="black"),
                 tickfont=dict(family="Arial", size=12, color="black")),
@@ -200,7 +200,7 @@ def update_heatmap(year_range, population_range, selected_times, selected_season
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8052)
+    app.run(debug=True, port=8053)
 
 
 # To run this app, open terminal inside VS code, activate venv, and "pip install dash plotly pandas numpy", then "python grid-heatmap.py"

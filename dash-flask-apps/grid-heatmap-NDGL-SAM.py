@@ -4,7 +4,7 @@ import dash
 from dash import dcc, html, Input, Output
 import plotly.express as px
 
-df = pd.read_csv("./data/CO2_NDGL_population_city.csv")
+df = pd.read_csv("./data/CO2_SAM_population_city-2019.csv")
 
 df["datetime"] = pd.to_datetime(
     df["datetime"],
@@ -179,7 +179,7 @@ def update_heatmap(year_range, population_range, selected_times, selected_season
 
     fig.update_layout(
         template="plotly_white",
-        title="Atmospheric CO2 Levels (Nadir + Glint)",
+        title="Atmospheric CO2 Levels (SAM)",
         title_font=dict(family="Arial", size=18, color="black"),
         xaxis=dict(title_font=dict(family="Arial", size=16, color="black"),
                 tickfont=dict(family="Arial", size=12, color="black")),

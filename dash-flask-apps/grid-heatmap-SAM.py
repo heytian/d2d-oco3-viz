@@ -1,3 +1,5 @@
+## notes as of Feb 25 2026; optimized a bit for SQL query and better than 'grid-heatmap-NDGL-SAM.py', but latency could still be improved
+
 import pandas as pd
 import numpy as np
 import dash

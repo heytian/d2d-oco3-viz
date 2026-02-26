@@ -1,3 +1,5 @@
+## Feb 26 2025 notes: laggy version that pulls from local SQL database
+
 import pandas as pd
 import numpy as np
 import dash

@@ -4,24 +4,35 @@ import dash
 from dash import dcc, html, Input, Output
 import plotly.express as px
 
-df = pd.read_csv("./data/CO2_SAM_population_city-2019.csv")
+from sqlalchemy import create_engine
+engine = create_engine("postgresql://postgres:<INSERTPASSWORD>@localhost:5432/geocode") #add own SQL password
 
-df["datetime"] = pd.to_datetime(
-    df["datetime"],
-    format="%m/%d/%y %H:%M",
-    errors="coerce"
-)
+df = pd.read_sql("""
+    SELECT
+        city,
+        country,
+        population,
+        latitude,
+        longitude,
+        DATE_TRUNC('month', datetime::timestamp) AS datetime,
+        datetime::timestamp AS local_time,
+        AVG(xco2) AS xco2
+    FROM co2_sam_cities_pop
+    WHERE datetime IS NOT NULL
+    GROUP BY city, country, population, latitude, longitude,
+             DATE_TRUNC('month', datetime::timestamp),
+             datetime::timestamp
+""", engine)
+
+df["datetime"] = pd.to_datetime(df["datetime"], errors="coerce")
 
 df["year"] = df["datetime"].dt.year
 df["month"] = df["datetime"].dt.month
 
 df["time_bin"] = df["datetime"].dt.to_period("M").astype(str)
 
-df["local_time"] = pd.to_datetime(
-    df["local_time"],
-    format="%m/%d/%y %H:%M",
-    errors="coerce"
-)
+df["local_time"] = pd.to_datetime(df["local_time"], errors="coerce")
+
 df["hour"] = df["local_time"].dt.hour
 
 df["time_of_day"] = pd.cut(
@@ -31,39 +42,29 @@ df["time_of_day"] = pd.cut(
     right=False
 )
 
-def assign_season(row):
-    lat = row['latitude']
-    month = row['month']
+def assign_season(df):
+    lat = df["latitude"]
+    month = df["month"]
+    conditions = [
+        (lat >= -20) & (lat <= 20) & (month >= 5) & (month <= 10),
+        (lat >= -20) & (lat <= 20) & ~((month >= 5) & (month <= 10)),
+        (lat > 20) & (lat <= 60) & (month.isin([12,1,2])),
+        (lat > 20) & (lat <= 60) & (month.isin([3,4,5])),
+        (lat > 20) & (lat <= 60) & (month.isin([6,7,8])),
+        (lat > 20) & (lat <= 60) & (month.isin([9,10,11])),
+        (lat >= -60) & (lat < -20) & (month.isin([12,1,2])),
+        (lat >= -60) & (lat < -20) & (month.isin([3,4,5])),
+        (lat >= -60) & (lat < -20) & (month.isin([6,7,8])),
+        (lat >= -60) & (lat < -20) & (month.isin([9,10,11])),
+    ]
+    choices = [
+        "Tropical Wet", "Tropical Dry",
+        "Winter (North)", "Spring (North)", "Summer (North)", "Autumn (North)",
+        "Summer (South)", "Autumn (South)", "Winter (South)", "Spring (South)"
+    ]
+    return np.select(conditions, choices, default="Other")
 
-    if -20 <= lat <= 20:
-        if 5 <= month <= 10:
-            return "Tropical Wet"
-        else:
-            return "Tropical Dry"
-
-    if 20 < lat <= 60:
-        if month in [12, 1, 2]:
-            return "Winter (North)"
-        elif month in [3, 4, 5]:
-            return "Spring (North)"
-        elif month in [6, 7, 8]:
-            return "Summer (North)"
-        else:
-            return "Autumn (North)"
-
-    if -60 <= lat < -20:
-        if month in [12, 1, 2]:
-            return "Summer (South)"
-        elif month in [3, 4, 5]:
-            return "Autumn (South)"
-        elif month in [6, 7, 8]:
-            return "Winter (South)"
-        else:
-            return "Spring (South)"
-
-    return "Other"
-
-df["season"] = df.apply(assign_season, axis=1)
+df["season"] = assign_season(df)
 
 def simple_marks(min_val, max_val):
     mid = (min_val + max_val)//2
@@ -77,8 +78,6 @@ app = dash.Dash(
 app.layout = html.Div([
 
     dcc.Graph(id='heatmap'),
-
-    # html.H1("OCO-3 CO2",style={"font-family":"Arial", "font-size":"16px", "color":"black"}),
 
     html.Div([
         html.Label("Time Range (Years)", style={"margin-right":"10px", "width":"150px"}),

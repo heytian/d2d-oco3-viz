@@ -1,0 +1,8 @@
+# requirements.txt — for Render deployment; for grid-heatmap-duckdb.py
+dash
+plotly
+duckdb
+pandas
+numpy
+gunicorn
+gdown

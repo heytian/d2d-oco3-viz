@@ -6,9 +6,9 @@ import pandas as pd
 import numpy as np
 import dash
 from dash import dcc, html, Input, Output
-import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 import duckdb
-import gdown
 import os
 
 ### file path for gdrive parquet
@@ -26,7 +26,7 @@ import os
 # }
 
 ### file path for local testing of parquet
-PARQUET_DIR="/Users/heyutian/Downloads/drive-download-20260306T042718Z-3-001"
+PARQUET_DIR="/Users/heyutian/Downloads/oco3_parquet"
 os.makedirs(PARQUET_DIR, exist_ok=True)
 CO2_PARQUET = os.path.join(PARQUET_DIR, "co2_sam.parquet")
 SIF_PARQUET = os.path.join(PARQUET_DIR, "sif_sam.parquet")
@@ -181,12 +181,15 @@ app.layout = html.Div([
 def update_heatmap(year_range, population_range, selected_times, selected_seasons):
 
     if not selected_times or not selected_seasons:
-        return px.imshow([[0]], title="No data selected")
+        fig = make_subplots(rows=2, cols=1)
+        fig.add_annotation(text="No data selected", xref="paper", yref="paper", x=0.5, y=0.5, showarrow=False)
+        return fig
 
     season_list = ",".join(f"'{s}'" for s in selected_seasons)
     time_list   = ",".join(f"'{t}'" for t in selected_times)
 
-    query = f"""
+    # --- CO2 query (unchanged) ---
+    co2_query = f"""
         SELECT
             city || ', ' || country                              AS city_label,
             strftime(DATE_TRUNC('month', datetime), '%Y-%m')    AS time_bin,
@@ -202,40 +205,121 @@ def update_heatmap(year_range, population_range, selected_times, selected_season
         ORDER BY time_bin
     """
 
-    agg = duck_query(query)
+    sif_query = f"""
+        SELECT
+            city || ', ' || country                              AS city_label,
+            strftime(DATE_TRUNC('month', datetime), '%Y-%m')    AS time_bin,
+            AVG(Daily_SIF_757nm)                                            AS sif_mean
+        FROM read_parquet('{SIF_PARQUET}')
+        WHERE
+            datetime   IS NOT NULL
+            AND EXTRACT(YEAR FROM datetime) BETWEEN {year_range[0]} AND {year_range[1]}
+            AND population BETWEEN {population_range[0]} AND {population_range[1]}
+            AND {SEASON_CASE} IN ({season_list})
+            AND {HOUR_CASE}   IN ({time_list})
+        GROUP BY city_label, time_bin
+        ORDER BY time_bin
+    """
 
-    if agg.empty:
-        return px.imshow([[0]], title="No data for selected filters")
+    co2_agg = duck_query(co2_query)
+    sif_agg = duck_query(sif_query)
 
-    pivot = agg.pivot(index="city_label", columns="time_bin", values="xco2_mean")
-    pivot = pivot.dropna(axis=0, how='all').dropna(axis=1, how='all')
+    if co2_agg.empty and sif_agg.empty:
+        fig = make_subplots(rows=2, cols=1)
+        fig.add_annotation(text="No data for selected filters", xref="paper", yref="paper", x=0.5, y=0.5, showarrow=False)
+        return fig
 
-    fig = px.imshow(
-        pivot.values,
-        x=pivot.columns.tolist(),
-        y=pivot.index.tolist(),
-        aspect="auto",
-        color_continuous_scale="Greys",
-        labels={"x": "Time", "y": "City", "color": "CO₂ (ppm)"}
+    # --- Pivot both datasets ---
+    def make_pivot(df, val_col):
+        pivot = df.pivot(index="city_label", columns="time_bin", values=val_col)
+        return pivot.dropna(axis=0, how='all').dropna(axis=1, how='all')
+
+    co2_pivot = make_pivot(co2_agg, "xco2_mean") if not co2_agg.empty else pd.DataFrame()
+    sif_pivot = make_pivot(sif_agg, "sif_mean")  if not sif_agg.empty else pd.DataFrame()
+
+    # Align rows (cities) across both pivots so they line up vertically
+    shared_cities = co2_pivot.index.union(sif_pivot.index)
+    co2_pivot = co2_pivot.reindex(shared_cities)
+    sif_pivot = sif_pivot.reindex(shared_cities)
+
+    # Shared time axis
+    shared_times = co2_pivot.columns.union(sif_pivot.columns).tolist()
+    co2_pivot = co2_pivot.reindex(columns=shared_times)
+    sif_pivot = sif_pivot.reindex(columns=shared_times)
+
+    city_labels = shared_cities.tolist()
+
+    AXIS_FONT  = dict(family="Arial", size=14, color="black")
+    TICK_FONT  = dict(family="Arial", size=11, color="black")
+
+
+    fig = make_subplots(
+        rows=2, cols=1,
+        shared_xaxes=True,
+        vertical_spacing=0.08,
+        subplot_titles=["Atmospheric CO₂ (ppm)", "Solar-Induced Fluorescence — SIF (mW/m²/sr/nm)"]
     )
 
-    fig.update_traces(zmin=400, zmax=450)
+    fig.add_trace(
+        go.Heatmap(
+            z=co2_pivot.values,
+            x=shared_times,
+            y=city_labels,
+            colorscale="Greys",
+            zmin=400, zmax=450,
+            colorbar=dict(
+                title=dict(text="CO₂ (ppm)", font=AXIS_FONT),
+                tickfont=TICK_FONT,
+                len=0.45,
+                y=0.78,
+                yanchor="middle"
+            ),
+            name="CO₂"
+        ),
+        row=1, col=1
+    )
+
+    fig.add_trace(
+        go.Heatmap(
+            z=sif_pivot.values,
+            x=shared_times,
+            y=city_labels,
+            colorscale="Greens",
+            colorbar=dict(
+                title=dict(text="SIF", font=AXIS_FONT),
+                tickfont=TICK_FONT,
+                len=0.45,
+                y=0.22,
+                yanchor="middle"
+            ),
+            name="SIF"
+        ),
+        row=2, col=1
+    )
 
     fig.update_layout(
         template="plotly_white",
-        title="Atmospheric CO₂ Levels (SAM)",
-        title_font=dict(family="Arial", size=18, color="black"),
-        xaxis=dict(title_font=dict(family="Arial", size=16, color="black"),
-                   tickfont=dict(family="Arial", size=12, color="black")),
-        yaxis=dict(title_font=dict(family="Arial", size=16, color="black"),
-                   tickfont=dict(family="Arial", size=12, color="black")),
-        coloraxis_colorbar=dict(title_font=dict(family="Arial", size=14, color="black"),
-                                tickfont=dict(family="Arial", size=12, color="black")),
+        title=dict(
+            text="Atmospheric CO₂ & SIF Levels (SAM)",
+            font=dict(family="Arial", size=18, color="black")
+        ),
         font=dict(family="Arial, sans-serif", color="black", size=14),
         paper_bgcolor="white",
         plot_bgcolor="#ffffff",
-        height=600
+        height=900,
     )
+
+    for axis in [fig.layout.xaxis, fig.layout.xaxis2]:
+        axis.update(title_font=AXIS_FONT, tickfont=TICK_FONT)
+
+    for axis in [fig.layout.yaxis, fig.layout.yaxis2]:
+        axis.update(
+            title="City",
+            title_font=AXIS_FONT,
+            tickfont=TICK_FONT
+        )
+
+    fig.layout.xaxis2.update(title="Time", title_font=AXIS_FONT)
 
     return fig
 

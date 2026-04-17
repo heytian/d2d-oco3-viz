@@ -323,7 +323,7 @@ def update_quadrant(year_range, pop_range, sel_times, sel_seasons, extreme_pct, 
 
     bg_color = "#000000" if dark_mode else "white"
     text_color = "#ffffff" if dark_mode else "black"
-    plot_color = "#1a1a1a" if dark_mode else "#f9f9f9"
+    plot_color = "#000000" if dark_mode else "#f9f9f9"
 
     # Define colors for quadrants
     quadrant_colors = {

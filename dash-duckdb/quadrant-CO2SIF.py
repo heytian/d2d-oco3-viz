@@ -109,11 +109,10 @@ ROW = {"display": "flex", "alignItems": "center", "margin": "3px 10px"}
 LBL = {"marginRight": "8px", "width": "115px", "fontWeight": "bold", "fontSize": "12px", "flexShrink": "0"}
 
 PERCENTILE_OPTIONS = [
-    {"label": "Min", "value": 0},
-    {"label": "25th percentile", "value": 25},
-    {"label": "50th percentile (median)", "value": 50},
-    {"label": "75th percentile", "value": 75},
-    {"label": "Max", "value": 100},
+    {"label": "15%", "value": 15},
+    {"label": "20%", "value": 20},
+    {"label": "30%", "value": 30},
+    {"label": "45%", "value": 45}
 ]
 
 app.layout = html.Div([
@@ -148,14 +147,9 @@ app.layout = html.Div([
         ], style={"display": "flex", "flexWrap": "wrap"}),
         html.Div([
             html.Div([
-                html.Label("CO₂ threshold", style=LBL),
-                dcc.Dropdown(id="co2-threshold", options=PERCENTILE_OPTIONS,
-                    value=50, style={"width": "200px", "fontSize": "12px"}),
-            ], style=ROW),
-            html.Div([
-                html.Label("SIF threshold", style=LBL),
-                dcc.Dropdown(id="sif-threshold", options=PERCENTILE_OPTIONS,
-                    value=50, style={"width": "200px", "fontSize": "12px"}),
+                html.Label("Extreme % to highlight", style=LBL),
+                dcc.Dropdown(id="extreme-percentage", options=PERCENTILE_OPTIONS,
+                    value=5, style={"width": "200px", "fontSize": "12px"}),
             ], style=ROW),
             html.Div([
                 html.Label("City subset", style=LBL),
@@ -202,13 +196,16 @@ def toggle_dark_mode(n_clicks):
     Input("population-slider", "value"),
     Input("time-dropdown", "value"),
     Input("season-dropdown", "value"),
-    Input("co2-threshold", "value"),
-    Input("sif-threshold", "value"),
+    Input("extreme-percentage", "value"),
     Input("city-subset-radio", "value"),
     Input("dark-mode-store", "data"),
     prevent_initial_call=False
 )
-def update_quadrant(year_range, pop_range, sel_times, sel_seasons, co2_percentile, sif_percentile, city_subset, dark_mode):
+def update_quadrant(year_range, pop_range, sel_times, sel_seasons, extreme_pct, city_subset, dark_mode):
+    # Handle None values
+    if extreme_pct is None:
+        extreme_pct = 5
+
     def empty(msg="No data for selected filters"):
         f = go.Figure()
         f.add_annotation(text=msg, xref="paper", yref="paper", x=0.5, y=0.5, showarrow=False, font=dict(size=15))
@@ -259,33 +256,70 @@ def update_quadrant(year_range, pop_range, sel_times, sel_seasons, co2_percentil
     if co2_city_data.empty or sif_city_data.empty:
         return empty(f"No CO2 data: {co2_city_data.empty}, No SIF data: {sif_city_data.empty}")
 
-    if co2_data.empty or sif_data.empty:
-        return empty()
-
-    # Calculate thresholds from all data
-    co2_threshold = np.percentile(co2_data["co2_val"].dropna(), co2_percentile)
-    sif_threshold = np.percentile(sif_data["sif_val"].dropna(), sif_percentile)
-
-    # Merge data by target_name - get all CO2/SIF pairs
-    merged_data = co2_data.merge(sif_data, on='target_name', how='inner')
+    # Merge on city with inner join
+    merged_data = co2_city_data.merge(sif_city_data, on='city', how='inner')
 
     if merged_data.empty:
-        return empty()
+        return empty("No matching cities in both datasets")
 
-    # Assign quadrants
+    # Use median to define quadrants (visual categorization)
+    co2_median = merged_data["co2_val"].median()
+    sif_median = merged_data["sif_val"].median()
+
+    # Assign quadrants based on median
     def get_quadrant(co2, sif):
         if pd.isna(co2) or pd.isna(sif):
             return None
-        if co2 >= co2_threshold and sif >= sif_threshold:
+        if co2 >= co2_median and sif >= sif_median:
             return "High CO₂, High SIF"
-        elif co2 < co2_threshold and sif >= sif_threshold:
+        elif co2 < co2_median and sif >= sif_median:
             return "Low CO₂, High SIF"
-        elif co2 >= co2_threshold and sif < sif_threshold:
+        elif co2 >= co2_median and sif < sif_median:
             return "High CO₂, Low SIF"
         else:
             return "Low CO₂, Low SIF"
 
     merged_data["quadrant"] = merged_data.apply(lambda row: get_quadrant(row["co2_val"], row["sif_val"]), axis=1)
+
+    # Identify extreme values: top/bottom X% for high/low quadrants
+    def identify_extremes(qdata, co2_col, sif_col, extreme_pct, quadrant_name):
+        """Mark cities in top/bottom X% as extremes for each quadrant"""
+        is_high_co2 = "High CO₂" in quadrant_name
+        is_high_sif = "High SIF" in quadrant_name
+
+        if qdata.empty:
+            return qdata
+
+        # For high quadrants, mark top extreme_pct%
+        # For low quadrants, mark bottom extreme_pct%
+        if is_high_co2:
+            co2_threshold = qdata[co2_col].quantile((100 - extreme_pct) / 100)
+            qdata_co2_extreme = qdata[qdata[co2_col] >= co2_threshold]
+        else:
+            co2_threshold = qdata[co2_col].quantile(extreme_pct / 100)
+            qdata_co2_extreme = qdata[qdata[co2_col] <= co2_threshold]
+
+        if is_high_sif:
+            sif_threshold = qdata[sif_col].quantile((100 - extreme_pct) / 100)
+            qdata_sif_extreme = qdata[qdata[sif_col] >= sif_threshold]
+        else:
+            sif_threshold = qdata[sif_col].quantile(extreme_pct / 100)
+            qdata_sif_extreme = qdata[qdata[sif_col] <= sif_threshold]
+
+        # Cities that are extreme in both CO2 and SIF for this quadrant
+        extreme_cities = set(qdata_co2_extreme.index) & set(qdata_sif_extreme.index)
+        qdata['is_extreme'] = qdata.index.isin(extreme_cities)
+        return qdata
+
+    # Mark extremes within each quadrant
+    merged_data['is_extreme'] = False
+    for quadrant in ["High CO₂, High SIF", "Low CO₂, High SIF", "High CO₂, Low SIF", "Low CO₂, Low SIF"]:
+        quad_mask = merged_data["quadrant"] == quadrant
+        quad_indices = merged_data[quad_mask].index
+        if len(quad_indices) > 0:
+            quad_data = merged_data.loc[quad_indices].copy()
+            quad_data = identify_extremes(quad_data, "co2_val", "sif_val", extreme_pct, quadrant)
+            merged_data.loc[quad_indices, 'is_extreme'] = quad_data['is_extreme']
 
     bg_color = "#000000" if dark_mode else "white"
     text_color = "#ffffff" if dark_mode else "black"
@@ -305,50 +339,46 @@ def update_quadrant(year_range, pop_range, sel_times, sel_seasons, co2_percentil
     for quadrant in ["High CO₂, High SIF", "Low CO₂, High SIF", "High CO₂, Low SIF", "Low CO₂, Low SIF"]:
         quad_data = merged_data[merged_data["quadrant"] == quadrant]
         if not quad_data.empty:
-            fig.add_trace(go.Scatter(
-                x=quad_data["co2_val"],
-                y=quad_data["sif_val"],
-                mode='markers',
-                name=quadrant,
-                marker=dict(
-                    size=6,
-                    color=quadrant_colors[quadrant],
-                    opacity=0.6,
-                    line=dict(width=0.5, color="rgba(0,0,0,0.3)"),
-                ),
-                hovertemplate=f"<b>{quadrant}</b><br>CO₂: %{{x:.2f}} ppm<br>SIF: %{{y:.4f}}<extra></extra>",
-            ))
+            # Separate extreme and faded cities
+            extreme_data = quad_data[quad_data["is_extreme"]]
+            faded_data = quad_data[~quad_data["is_extreme"]]
 
-    # Add threshold lines (L-shaped axis)
-    x_range = merged_data["co2_val"].agg(['min', 'max'])
-    y_range = merged_data["sif_val"].agg(['min', 'max'])
+            # Add faded cities (low opacity, no outline)
+            if not faded_data.empty:
+                fig.add_trace(go.Scatter(
+                    x=faded_data["co2_val"],
+                    y=faded_data["sif_val"],
+                    mode='markers',
+                    name=f"{quadrant} (other)",
+                    marker=dict(
+                        size=5,
+                        color=quadrant_colors[quadrant],
+                        opacity=0.2,
+                        line=dict(width=0),
+                    ),
+                    hovertemplate="<b>%{customdata[0]}</b><br>CO₂: %{x:.2f} ppm<br>SIF: %{y:.4f}<extra></extra>",
+                    customdata=faded_data[["city"]].values,
+                    showlegend=False,
+                ))
 
-    padding_x = (x_range['max'] - x_range['min']) * 0.05
-    padding_y = (y_range['max'] - y_range['min']) * 0.05
+            # Add extreme cities (darker, with outline)
+            if not extreme_data.empty:
+                fig.add_trace(go.Scatter(
+                    x=extreme_data["co2_val"],
+                    y=extreme_data["sif_val"],
+                    mode='markers',
+                    name=quadrant,
+                    marker=dict(
+                        size=8,
+                        color=quadrant_colors[quadrant],
+                        opacity=0.9,
+                        line=dict(width=2, color="rgba(0,0,0,0.8)"),
+                    ),
+                    hovertemplate="<b>%{customdata[0]}</b><br>CO₂: %{x:.2f} ppm<br>SIF: %{y:.4f}<extra></extra>",
+                    customdata=extreme_data[["city"]].values,
+                ))
 
-    # Horizontal line (SIF threshold)
-    fig.add_hline(
-        y=sif_threshold,
-        line_dash="dash",
-        line_color="gray",
-        line_width=2,
-        annotation_text=f"SIF {sif_percentile}th: {sif_threshold:.4f}",
-        annotation_position="right",
-        annotation_font_size=10,
-        annotation_font_color=text_color,
-    )
-
-    # Vertical line (CO2 threshold)
-    fig.add_vline(
-        x=co2_threshold,
-        line_dash="dash",
-        line_color="gray",
-        line_width=2,
-        annotation_text=f"CO₂ {co2_percentile}th: {co2_threshold:.2f} ppm",
-        annotation_position="top",
-        annotation_font_size=10,
-        annotation_font_color=text_color,
-    )
+    # Remove the old threshold visualization section that adds hlines and vlines
 
     fig.update_layout(
         title=f"CO₂ vs SIF Quadrant Analysis",

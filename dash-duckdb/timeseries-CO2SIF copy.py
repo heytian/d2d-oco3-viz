@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import duckdb
 import os
+from scipy.interpolate import CubicSpline
 
 ### file path for gdrive parquet
 
@@ -365,75 +366,83 @@ def update_heatmap(year_range, pop_range, sel_times, sel_seasons, mean_type, lay
         autosize=True, hovermode="closest",
     )
 
-    def flatten_grid_with_size(count_array, z_array, x_vals, y_vals, cd_array):
-        x_flat, y_flat, size_flat, cd_flat = [], [], [], []
-        max_count = np.nanmax(count_array)
-        if max_count == 0 or np.isnan(max_count):
-            max_count = 1
-
-        for i, y in enumerate(y_vals):
-            for j, x in enumerate(x_vals):
-                if not np.isnan(count_array[i, j]) and count_array[i, j] > 0 and not np.isnan(z_array[i, j]):
-                    x_flat.append(j)
-                    y_flat.append(i)
-                    # Constrain max size for halftone comic book effect
-                    size_flat.append(5 + 10 * (count_array[i, j] / max_count))
-                    cd_flat.append(cd_array[i, j])
-        return x_flat, y_flat, size_flat, cd_flat
-
-    def flatten_grid_with_color(z_array, count_array, x_vals, y_vals, cd_array):
-        x_flat, y_flat, z_flat, cd_flat = [], [], [], []
-        for i, y in enumerate(y_vals):
-            for j, x in enumerate(x_vals):
-                if not np.isnan(z_array[i, j]) and not np.isnan(count_array[i, j]):
-                    x_flat.append(j)
-                    y_flat.append(i)
-                    z_flat.append(z_array[i, j])
-                    cd_flat.append(cd_array[i, j])
-        return x_flat, y_flat, z_flat, cd_flat
-
     if layout_mode == "subplot":
         fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.03, row_heights=[0.5, 0.5])
 
-        x_co2, y_co2, size_co2, cd_co2_scatter = flatten_grid_with_size(co2_pn.values, co2_z, times, cities, cd_co2)
+        # CO2 curves
+        for i, city in enumerate(cities):
+            city_indices = [j for j in range(nt) if not np.isnan(co2_pn.iloc[i, j]) and not np.isnan(co2_z[i, j])]
+            if city_indices:
+                x_co2_city = np.array([j for j in city_indices], dtype=float)
+                y_co2_city = np.array([co2_z[i, j] for j in city_indices], dtype=float)
 
-        fig.add_trace(go.Scatter(
-            x=x_co2, y=y_co2, mode='markers',
-            marker=dict(
-                size=size_co2,
-                color='white' if dark_mode else 'black',
-                line=dict(width=0),
-                opacity=0.7,
-            ),
-            customdata=cd_co2_scatter,
-            hovertemplate=HT_CO2,
-            name="CO₂", showlegend=False,
-        ), row=1, col=1)
+                # Generate smooth curve using cubic interpolation
+                if len(city_indices) > 1:
+                    cs = CubicSpline(x_co2_city, y_co2_city)
+                    x_smooth = np.linspace(x_co2_city.min(), x_co2_city.max(), max(100, len(city_indices) * 10))
+                    y_smooth = cs(x_smooth)
+                    x_plot = x_smooth
+                    y_plot = y_smooth
+                else:
+                    x_plot = x_co2_city
+                    y_plot = y_co2_city
 
-        x_sif, y_sif, z_sif, cd_sif_scatter = flatten_grid_with_color(sif_z, sif_pn.values, times, cities, cd_sif)
+                fig.add_trace(go.Scatter(
+                    x=x_plot, y=y_plot, mode='lines',
+                    line=dict(color='white' if dark_mode else 'black', width=2),
+                    name=city if i == 0 else "", showlegend=False,
+                    hovertemplate=f"<b>{city}</b><br>Time idx: %{{x:.0f}}<br>Variance: %{{y:.3f}}<extra></extra>",
+                ), row=1, col=1)
 
-        fig.add_trace(go.Scatter(
-            x=x_sif, y=y_sif, mode='markers',
-            marker=dict(
-                size=12,
-                color=z_sif,
-                colorscale=[[0, "#000000"], [0.5, "#808080"], [1, "#ffffff"]] if dark_mode else [[0, "#ffffff"], [0.5, "#808080"], [1, "#000000"]],
-                line=dict(width=0),
-                colorbar=dict(
-                    title=dict(text="SIF var", font=dict(family="Arial", size=10)),
-                    tickformat="+.3f",
-                    tickfont=TF,
-                    lenmode="fraction", len=0.44,
-                    y=0.25, yanchor="middle",
-                    x=1.02, xanchor="left",
-                    thickness=12, outlinewidth=0,
-                ),
-                cmin=-sif_sym, cmax=sif_sym, cmid=0,
-            ),
-            customdata=cd_sif_scatter,
-            hovertemplate=HT_SIF,
-            name="SIF", showlegend=False,
-        ), row=2, col=1)
+        # SIF curves
+        for i, city in enumerate(cities):
+            city_indices = [j for j in range(nt) if not np.isnan(sif_pn.iloc[i, j]) and not np.isnan(sif_z[i, j])]
+            if city_indices:
+                x_sif_city = np.array([j for j in city_indices], dtype=float)
+                y_sif_city = np.array([sif_z[i, j] for j in city_indices], dtype=float)
+
+                # Get color based on mean variance value
+                mean_val = np.mean(y_sif_city)
+                color_val = (mean_val + sif_sym) / (2 * sif_sym)
+                color_val = np.clip(color_val, 0, 1)
+
+                # Generate smooth curve using cubic interpolation
+                if len(city_indices) > 1:
+                    cs = CubicSpline(x_sif_city, y_sif_city)
+                    x_smooth = np.linspace(x_sif_city.min(), x_sif_city.max(), max(100, len(city_indices) * 10))
+                    y_smooth = cs(x_smooth)
+                    x_plot = x_smooth
+                    y_plot = y_smooth
+                else:
+                    x_plot = x_sif_city
+                    y_plot = y_sif_city
+
+                # Map color value to colorscale
+                if dark_mode:
+                    colorscale = [[0, "#000000"], [0.5, "#808080"], [1, "#ffffff"]]
+                else:
+                    colorscale = [[0, "#ffffff"], [0.5, "#808080"], [1, "#000000"]]
+
+                # Interpolate color
+                if color_val < 0.5:
+                    c1, c2 = colorscale[0][1], colorscale[1][1]
+                    t = color_val * 2
+                else:
+                    c1, c2 = colorscale[1][1], colorscale[2][1]
+                    t = (color_val - 0.5) * 2
+
+                # Simple hex color interpolation
+                c1_rgb = tuple(int(c1[i:i+2], 16) for i in (1, 3, 5))
+                c2_rgb = tuple(int(c2[i:i+2], 16) for i in (1, 3, 5))
+                color_rgb = tuple(int(c1_rgb[j] + (c2_rgb[j] - c1_rgb[j]) * t) for j in range(3))
+                curve_color = f"rgb({color_rgb[0]},{color_rgb[1]},{color_rgb[2]})"
+
+                fig.add_trace(go.Scatter(
+                    x=x_plot, y=y_plot, mode='lines',
+                    line=dict(color=curve_color, width=2),
+                    name=city if i == 0 else "", showlegend=False,
+                    hovertemplate=f"<b>{city}</b><br>Time idx: %{{x:.0f}}<br>SIF Variance: %{{y:.4f}}<extra></extra>",
+                ), row=2, col=1)
 
         fig.update_xaxes(tickfont=TF, showticklabels=False, showgrid=False, row=1, col=1)
         fig.update_xaxes(tickfont=TF, title="Time", title_font=AF, showgrid=False, row=2, col=1)
@@ -459,42 +468,74 @@ def update_heatmap(year_range, pop_range, sel_times, sel_seasons, mean_type, lay
         for i, city in enumerate(cities):
             city_indices = [j for j in range(nt) if not np.isnan(co2_pn.iloc[i, j]) and not np.isnan(co2_z[i, j])]
             if city_indices:
-                x_co2_city = [times[j] for j in city_indices]
-                y_co2_city = [city] * len(city_indices)
-                max_count = np.nanmax(co2_pn.values)
-                if max_count == 0 or np.isnan(max_count):
-                    max_count = 1
-                size_co2_city = [5 + 25 * (co2_pn.iloc[i, j] / max_count) for j in city_indices]
-                cd_co2_city = [cd_co2[i, j] for j in city_indices]
+                x_co2_city = np.array([j for j in city_indices], dtype=float)
+                y_co2_city = np.array([co2_z[i, j] for j in city_indices], dtype=float)
+
+                # Generate smooth curve using cubic interpolation
+                if len(city_indices) > 1:
+                    cs = CubicSpline(x_co2_city, y_co2_city)
+                    x_smooth = np.linspace(x_co2_city.min(), x_co2_city.max(), max(100, len(city_indices) * 10))
+                    y_smooth = cs(x_smooth)
+                    x_plot = x_smooth
+                    y_plot = y_smooth
+                else:
+                    x_plot = x_co2_city
+                    y_plot = y_co2_city
 
                 fig.add_trace(go.Scatter(
-                    x=x_co2_city, y=y_co2_city, mode='markers',
-                    marker=dict(size=size_co2_city, color='black', line=dict(width=0), opacity=0.7),
-                    customdata=cd_co2_city,
-                    hovertemplate=HT_CO2,
+                    x=x_plot, y=[i for _ in x_plot], mode='lines',
+                    line=dict(color='black', width=2),
                     name="CO₂", legendgroup="CO2", showlegend=(i==0),
+                    hovertemplate=f"<b>{city}</b><br>Time idx: %{{x:.0f}}<br>Variance: %{{customdata}}<extra></extra>",
                 ))
 
         for i, city in enumerate(cities):
             city_indices = [j for j in range(nt) if not np.isnan(sif_pn.iloc[i, j]) and not np.isnan(sif_z[i, j])]
             if city_indices:
-                x_sif_city = [times[j] for j in city_indices]
-                y_sif_city = [city + "\u200b"] * len(city_indices)
-                z_sif_city = [sif_z[i, j] for j in city_indices]
-                cd_sif_city = [cd_sif[i, j] for j in city_indices]
+                x_sif_city = np.array([j for j in city_indices], dtype=float)
+                y_sif_city = np.array([sif_z[i, j] for j in city_indices], dtype=float)
+
+                # Get color based on mean variance value
+                mean_val = np.mean(y_sif_city)
+                color_val = (mean_val + sif_sym) / (2 * sif_sym)
+                color_val = np.clip(color_val, 0, 1)
+
+                # Generate smooth curve using cubic interpolation
+                if len(city_indices) > 1:
+                    cs = CubicSpline(x_sif_city, y_sif_city)
+                    x_smooth = np.linspace(x_sif_city.min(), x_sif_city.max(), max(100, len(city_indices) * 10))
+                    y_smooth = cs(x_smooth)
+                    x_plot = x_smooth
+                    y_plot = y_smooth
+                else:
+                    x_plot = x_sif_city
+                    y_plot = y_sif_city
+
+                # Map color value to colorscale
+                if not dark_mode:
+                    colorscale = [[0, "#ffffff"], [0.5, "#808080"], [1, "#000000"]]
+                else:
+                    colorscale = [[0, "#000000"], [0.5, "#808080"], [1, "#ffffff"]]
+
+                # Interpolate color
+                if color_val < 0.5:
+                    c1, c2 = colorscale[0][1], colorscale[1][1]
+                    t = color_val * 2
+                else:
+                    c1, c2 = colorscale[1][1], colorscale[2][1]
+                    t = (color_val - 0.5) * 2
+
+                # Simple hex color interpolation
+                c1_rgb = tuple(int(c1[i_c:i_c+2], 16) for i_c in (1, 3, 5))
+                c2_rgb = tuple(int(c2[i_c:i_c+2], 16) for i_c in (1, 3, 5))
+                color_rgb = tuple(int(c1_rgb[j] + (c2_rgb[j] - c1_rgb[j]) * t) for j in range(3))
+                curve_color = f"rgb({color_rgb[0]},{color_rgb[1]},{color_rgb[2]})"
 
                 fig.add_trace(go.Scatter(
-                    x=x_sif_city, y=y_sif_city, mode='markers',
-                    marker=dict(
-                        size=12,
-                        color=z_sif_city,
-                        colorscale=[[0, "#ffffff"], [0.5, "#808080"], [1, "#000000"]] if not dark_mode else [[0, "#000000"], [0.5, "#808080"], [1, "#ffffff"]],
-                        line=dict(width=0),
-                        cmin=-sif_sym, cmax=sif_sym, cmid=0,
-                    ),
-                    customdata=cd_sif_city,
-                    hovertemplate=HT_SIF,
+                    x=x_plot, y=[i + 0.5 for _ in x_plot], mode='lines',
+                    line=dict(color=curve_color, width=2),
                     name="SIF", legendgroup="SIF", showlegend=(i==0),
+                    hovertemplate=f"<b>{city}</b><br>Time idx: %{{x:.0f}}<br>SIF Variance: %{{customdata}}<extra></extra>",
                 ))
 
         max_label_len = max(len(c) for c in cities)
@@ -516,4 +557,4 @@ def update_heatmap(year_range, pop_range, sel_times, sel_seasons, mean_type, lay
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8052)
+    app.run(debug=True, port=8051)

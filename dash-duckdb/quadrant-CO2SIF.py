@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 import duckdb
 import os
 
-### file path for local testing of parquet
+#file path for local testing of parquet
 PARQUET_DIR = "/Users/heyutian/Downloads/oco3_parquet"
 CO2_PARQUET = os.path.join(PARQUET_DIR, "co2_sam.parquet")
 SIF_PARQUET = os.path.join(PARQUET_DIR, "sif_sam.parquet")
